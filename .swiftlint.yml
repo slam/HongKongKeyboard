@@ -1,0 +1,14 @@
+disabled_rules:
+  - trailing_comma
+
+included:
+  - HongKongKeyboard
+  - HongKongKeyboardApp
+
+identifier_name:
+  excluded:
+    - id
+    - x
+    - y
+    - dx
+    - dy

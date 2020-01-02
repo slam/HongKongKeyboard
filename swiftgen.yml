@@ -1,0 +1,7 @@
+xcassets:
+  inputs:
+    - HongKongKeyboardApp/Assets/Colors.xcassets
+    - HongKongKeyboardApp/Assets/Images.xcassets
+  outputs:
+    - templateName: swift4
+      output: HongKongKeyboardApp/Assets/Assets.swift
