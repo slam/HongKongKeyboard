@@ -1,11 +1,15 @@
 import KeyboardKit
+import GoogleInputTools
 import UIKit
 
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
+    var inputTools: GoogleInputTools
+
     // MARK: - Initialization
 
     public init(inputViewController: UIInputViewController) {
         keyboardShiftState = .lowercased
+        inputTools = GoogleInputTools()
         super.init(
             inputViewController: inputViewController,
             hapticConfiguration: .standard
@@ -35,6 +39,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
         case .shift: return switchToUppercaseKeyboard
         case .shiftDown: return switchToLowercaseKeyboard
         case .space: return handleSpace(for: view)
+        case .backspace: return handleBackspace(for: view)
         case let .switchToKeyboard(type): return { [weak self] in self?.keyboardViewController?.keyboardType = type }
         default: return super.tapAction(for: action, view: view)
         }
@@ -57,12 +62,13 @@ private extension HongKongKeyboardActionHandler {
     }
 
     func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
-        let baseAction = super.tapAction(for: action, view: view)
         return { [weak self] in
-            baseAction?()
-            let isUppercased = self?.keyboardShiftState == .uppercased
-            guard isUppercased else { return }
-            self?.switchToAlphabeticKeyboard(.lowercased)
+            switch action {
+            case .character(let char):
+                self?.inputTools.append(char)
+                self?.alert((self?.inputTools.getInput())!)
+            default: return
+            }
         }
     }
 
@@ -73,6 +79,13 @@ private extension HongKongKeyboardActionHandler {
             let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
             guard isNonAlpha else { return }
             self?.switchToAlphabeticKeyboard(.lowercased)
+        }
+    }
+
+    func handleBackspace(for view: UIView) -> GestureAction {
+        return { [weak self] in
+            self?.inputTools.popLast()
+            self?.alert((self?.inputTools.getInput())!)
         }
     }
 

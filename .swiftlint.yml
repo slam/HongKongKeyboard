@@ -4,6 +4,7 @@ disabled_rules:
 included:
   - HongKongKeyboard
   - HongKongKeyboardApp
+  - GoogleInputTools
 
 identifier_name:
   excluded:
