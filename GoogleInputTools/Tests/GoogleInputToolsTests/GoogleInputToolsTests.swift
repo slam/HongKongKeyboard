@@ -28,10 +28,6 @@ class GoogleInputToolsTests: QuickSpec {
                 inputTools.popLast()
                 expect(inputTools.getInput()).to(equal(""))
             }
-
-            it("is hello world") {
-                expect(inputTools.getText()).to(equal("Hello, World!"))
-            }
         }
     }
 }

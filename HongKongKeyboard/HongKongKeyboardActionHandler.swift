@@ -61,12 +61,49 @@ private extension HongKongKeyboardActionHandler {
         input.alerter.alert(message: message, in: input.view, withDuration: 4)
     }
 
+    func updateToolbar(_ response: GoogleInputResponse) {
+        guard let input = inputViewController as? KeyboardViewController else { return }
+
+        var count = 0
+        var words = [String]()
+        for suggestion in response.suggestions {
+            count += suggestion.word.count
+            if count < 15 {
+                words.append(suggestion.word)
+            }
+        }
+        input.autocompleteToolbar.update(with: words)
+    }
+
+    func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {
+        switch result {
+        case .success(let response):
+            if response.status != GoogleInputResponse.Status.success {
+                DispatchQueue.main.async {
+                    self.alert(response.status.rawValue)
+                }
+                return
+            }
+            let firstSuggestion = response.suggestions.count > 0 ? response.suggestions[0].word : ""
+            let message = "currentWord=\(currentWord) input=\(input) suggestion=\(firstSuggestion)"
+            print(message)
+            DispatchQueue.main.async {
+                self.updateToolbar(response)
+            }
+        case .failure(let error):
+            DispatchQueue.main.async {
+                self.alert(error.localizedDescription)
+            }
+        }
+    }
+
     func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
         return { [weak self] in
             switch action {
             case .character(let char):
-                self?.inputTools.append(char)
-                self?.alert((self?.inputTools.getInput())!)
+                self?.inputTools.append(char) { currentWord, input, result in
+                    self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                }
             default: return
             }
         }
@@ -84,8 +121,9 @@ private extension HongKongKeyboardActionHandler {
 
     func handleBackspace(for view: UIView) -> GestureAction {
         return { [weak self] in
-            self?.inputTools.popLast()
-            self?.alert((self?.inputTools.getInput())!)
+            self?.inputTools.popLast { currentWord, input, result in
+                self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+            }
         }
     }
 

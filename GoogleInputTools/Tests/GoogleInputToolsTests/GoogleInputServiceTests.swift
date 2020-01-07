@@ -3,8 +3,6 @@ import Nimble
 import Foundation
 @testable import GoogleInputTools
 
-
-
 class GoogleInputServiceTests: QuickSpec {
 
     override func spec() {
