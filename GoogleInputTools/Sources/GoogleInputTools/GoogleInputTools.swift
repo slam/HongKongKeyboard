@@ -11,7 +11,7 @@ public class GoogleInputTools {
     }
 
     public func append(_ char: String,
-                       completion: ((String, String, GoogleInputResult) -> Void)?) {
+                       completion: ((String, String, GoogleInputResult) -> Void)? = nil) {
         input.append(char)
 
         let thisInput = input
@@ -28,7 +28,7 @@ public class GoogleInputTools {
     }
 
     @discardableResult
-    public func popLast(_ completion: ((String, String, GoogleInputResult) -> Void)?) -> Character? {
+    public func popLast(_ completion: ((String, String, GoogleInputResult) -> Void)? = nil) -> Character? {
         let char = input.popLast()
 
         let thisInput = input
