@@ -77,6 +77,8 @@ import Foundation
 //   ]
 //]
 //
+public typealias GoogleInputResult = Result<GoogleInputResponse, Error>
+
 public struct GoogleInputResponse: Decodable {
 
     enum CodingKeys: String, CodingKey {
