@@ -1,11 +1,15 @@
+import GoogleInputTools
 import KeyboardKit
 import UIKit
 
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
+    var inputTools: GoogleInputTools
+
     // MARK: - Initialization
 
     public init(inputViewController: UIInputViewController) {
         keyboardShiftState = .lowercased
+        inputTools = GoogleInputTools()
         super.init(
             inputViewController: inputViewController,
             hapticConfiguration: .standard
@@ -35,6 +39,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
         case .shift: return switchToUppercaseKeyboard
         case .shiftDown: return switchToLowercaseKeyboard
         case .space: return handleSpace(for: view)
+        case .backspace: return handleBackspace(for: view)
         case let .switchToKeyboard(type): return { [weak self] in self?.keyboardViewController?.keyboardType = type }
         default: return super.tapAction(for: action, view: view)
         }
@@ -56,13 +61,51 @@ private extension HongKongKeyboardActionHandler {
         input.alerter.alert(message: message, in: input.view, withDuration: 4)
     }
 
-    func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
-        let baseAction = super.tapAction(for: action, view: view)
-        return { [weak self] in
-            baseAction?()
-            let isUppercased = self?.keyboardShiftState == .uppercased
-            guard isUppercased else { return }
-            self?.switchToAlphabeticKeyboard(.lowercased)
+    func updateToolbar(_ response: GoogleInputResponse) {
+        guard let input = inputViewController as? KeyboardViewController else { return }
+
+        var count = 0
+        var words = [String]()
+        for suggestion in response.suggestions {
+            count += suggestion.word.count
+            if count < 15 {
+                words.append(suggestion.word)
+            }
+        }
+        input.autocompleteToolbar.update(with: words)
+    }
+
+    func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {
+        switch result {
+        case let .success(response):
+            if response.status != GoogleInputResponse.Status.success {
+                DispatchQueue.main.async {
+                    self.alert(response.status.rawValue)
+                }
+                return
+            }
+            let firstSuggestion = response.suggestions.count > 0 ? response.suggestions[0].word : ""
+            let message = "currentWord=\(currentWord) input=\(input) suggestion=\(firstSuggestion)"
+            print(message)
+            DispatchQueue.main.async {
+                self.updateToolbar(response)
+            }
+        case let .failure(error):
+            DispatchQueue.main.async {
+                self.alert(error.localizedDescription)
+            }
+        }
+    }
+
+    func handleCharacter(_ action: KeyboardAction, for _: UIView) -> GestureAction {
+        { [weak self] in
+            switch action {
+            case let .character(char):
+                self?.inputTools.append(char) { currentWord, input, result in
+                    self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                }
+            default: return
+            }
         }
     }
 
@@ -73,6 +116,14 @@ private extension HongKongKeyboardActionHandler {
             let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
             guard isNonAlpha else { return }
             self?.switchToAlphabeticKeyboard(.lowercased)
+        }
+    }
+
+    func handleBackspace(for _: UIView) -> GestureAction {
+        { [weak self] in
+            self?.inputTools.popLast { currentWord, input, result in
+                self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+            }
         }
     }
 

@@ -1,9 +1,12 @@
 disabled_rules:
   - trailing_comma
+  - function_body_length
+  - opening_brace
 
 included:
   - HongKongKeyboard
   - HongKongKeyboardApp
+  - GoogleInputTools
 
 identifier_name:
   excluded:
