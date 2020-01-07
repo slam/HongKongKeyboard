@@ -15,14 +15,13 @@ let package = Package(
             targets: ["GoogleInputTools"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", from: "5.0.0-rc.3"),
         .package(url: "https://github.com/Quick/Quick.git", from: "2.2.0"),
         .package(url: "https://github.com/Quick/Nimble.git", .exact("8.0.2")),
     ],
     targets: [
         .target(
             name: "GoogleInputTools",
-            dependencies: ["Alamofire"]),
+            dependencies: []),
         .testTarget(
             name: "GoogleInputToolsTests",
             dependencies: ["GoogleInputTools", "Quick", "Nimble"]),
