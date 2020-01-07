@@ -1,5 +1,5 @@
 import Foundation
 
-protocol GoogleInputServiceProtocol: class {
+protocol GoogleInputServiceProtocol: AnyObject {
     func send(currentWord: String, input: String, completion: @escaping (GoogleInputResult) -> Void)
 }

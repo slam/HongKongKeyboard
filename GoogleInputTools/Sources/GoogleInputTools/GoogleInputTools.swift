@@ -1,25 +1,24 @@
 public class GoogleInputTools {
-
     private var input: String
     private var currentWord: String
     private var currentResponse: GoogleInputResponse?
     private var service: GoogleInputService
 
     public init() {
-        self.input = String()
-        self.currentWord = String()
-        self.service = GoogleInputService()
+        input = String()
+        currentWord = String()
+        service = GoogleInputService()
     }
 
     public func append(_ char: String,
                        completion: ((String, String, GoogleInputResult) -> Void)?) {
-        self.input.append(char)
+        input.append(char)
 
-        let thisInput = self.input
-        let thisWord = self.currentWord
-        self.service.send(currentWord: self.currentWord, input: self.input) { result in
+        let thisInput = input
+        let thisWord = currentWord
+        service.send(currentWord: currentWord, input: input) { result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 self.currentResponse = response
             case .failure:
                 break
@@ -32,11 +31,11 @@ public class GoogleInputTools {
     public func popLast(_ completion: ((String, String, GoogleInputResult) -> Void)?) -> Character? {
         let char = input.popLast()
 
-        let thisInput = self.input
-        let thisWord = self.currentWord
-        self.service.send(currentWord: self.currentWord, input: self.input) { result in
+        let thisInput = input
+        let thisWord = currentWord
+        service.send(currentWord: currentWord, input: input) { result in
             switch result {
-            case .success(let response):
+            case let .success(response):
                 self.currentResponse = response
             case .failure:
                 break
@@ -47,6 +46,6 @@ public class GoogleInputTools {
     }
 
     public func getInput() -> String {
-        return self.input
+        input
     }
 }

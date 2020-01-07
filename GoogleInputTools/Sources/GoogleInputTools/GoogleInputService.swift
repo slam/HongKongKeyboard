@@ -13,9 +13,7 @@ import Foundation
 // app: demopage
 //
 class GoogleInputService: NSObject, GoogleInputServiceProtocol {
-
     func send(currentWord: String, input: String, completion: @escaping (GoogleInputResult) -> Void) {
-
         var components = URLComponents(string: "https://inputtools.google.com/request")!
 
         let text = currentWord.isEmpty ? input : "|\(currentWord),\(input)"
@@ -33,9 +31,9 @@ class GoogleInputService: NSObject, GoogleInputServiceProtocol {
         var request = URLRequest(url: components.url!)
         request.httpMethod = "POST"
 
-        let task = URLSession.shared.dataTask(with: request) { (result) in
+        let task = URLSession.shared.dataTask(with: request) { result in
             switch result {
-            case .success(_, let data):
+            case let .success(_, data):
                 do {
                     let res = try JSONDecoder().decode(GoogleInputResponse.self, from: data)
                     completion(Result.success(res))
@@ -44,10 +42,10 @@ class GoogleInputService: NSObject, GoogleInputServiceProtocol {
                     print(String(data: data, encoding: String.Encoding.utf8)!)
                     completion(Result.failure(error))
                 }
-            case .failure(let error):
+            case let .failure(error):
                 print(error)
                 completion(Result.failure(error))
-             }
+            }
         }
         task.resume()
     }

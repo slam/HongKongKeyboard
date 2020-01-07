@@ -12,7 +12,8 @@ let package = Package(
         // Products define the executables and libraries produced by a package, and make them visible to other packages.
         .library(
             name: "GoogleInputTools",
-            targets: ["GoogleInputTools"]),
+            targets: ["GoogleInputTools"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", from: "2.2.0"),
@@ -21,10 +22,12 @@ let package = Package(
     targets: [
         .target(
             name: "GoogleInputTools",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "GoogleInputToolsTests",
-            dependencies: ["GoogleInputTools", "Quick", "Nimble"]),
+            dependencies: ["GoogleInputTools", "Quick", "Nimble"]
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )

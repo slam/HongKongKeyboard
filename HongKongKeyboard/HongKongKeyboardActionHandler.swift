@@ -1,5 +1,5 @@
-import KeyboardKit
 import GoogleInputTools
+import KeyboardKit
 import UIKit
 
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
@@ -77,7 +77,7 @@ private extension HongKongKeyboardActionHandler {
 
     func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {
         switch result {
-        case .success(let response):
+        case let .success(response):
             if response.status != GoogleInputResponse.Status.success {
                 DispatchQueue.main.async {
                     self.alert(response.status.rawValue)
@@ -90,17 +90,17 @@ private extension HongKongKeyboardActionHandler {
             DispatchQueue.main.async {
                 self.updateToolbar(response)
             }
-        case .failure(let error):
+        case let .failure(error):
             DispatchQueue.main.async {
                 self.alert(error.localizedDescription)
             }
         }
     }
 
-    func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
-        return { [weak self] in
+    func handleCharacter(_ action: KeyboardAction, for _: UIView) -> GestureAction {
+        { [weak self] in
             switch action {
-            case .character(let char):
+            case let .character(char):
                 self?.inputTools.append(char) { currentWord, input, result in
                     self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
                 }
@@ -119,8 +119,8 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleBackspace(for view: UIView) -> GestureAction {
-        return { [weak self] in
+    func handleBackspace(for _: UIView) -> GestureAction {
+        { [weak self] in
             self?.inputTools.popLast { currentWord, input, result in
                 self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
             }

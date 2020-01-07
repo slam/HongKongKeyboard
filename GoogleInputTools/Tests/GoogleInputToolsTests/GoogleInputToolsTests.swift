@@ -1,9 +1,8 @@
-import Quick
-import Nimble
 import GoogleInputTools
+import Nimble
+import Quick
 
 class GoogleInputToolsTests: QuickSpec {
-
     override func spec() {
         describe("example") {
             var inputTools: GoogleInputTools!

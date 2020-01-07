@@ -1,7 +1,7 @@
-import Quick
-import Nimble
 import Foundation
 import GoogleInputTools
+import Nimble
+import Quick
 
 let jsonResponseWithoutMatchedLength = """
 [
@@ -177,7 +177,6 @@ let jsonResponseWithError = """
 """.data(using: .utf8)
 
 class GoogleInputResponseTests: QuickSpec {
-
     override func spec() {
         describe("Decoding") {
             it("can decode jsonWithoutMatchedLength") {
