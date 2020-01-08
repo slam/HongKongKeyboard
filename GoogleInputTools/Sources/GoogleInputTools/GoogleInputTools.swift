@@ -1,7 +1,7 @@
 public class GoogleInputTools {
-    private var input: String
-    private var currentWord: String
-    private var currentResponse: GoogleInputResponse?
+    public private(set) var input: String
+    public private(set) var currentWord: String
+    public private(set) var currentResponse: GoogleInputResponse?
     private var service: GoogleInputService
 
     public init() {
@@ -29,7 +29,9 @@ public class GoogleInputTools {
 
     @discardableResult
     public func popLast(_ completion: ((String, String, GoogleInputResult) -> Void)? = nil) -> Character? {
-        let char = input.popLast()
+        guard let char = input.popLast() else {
+            return nil
+        }
 
         let thisInput = input
         let thisWord = currentWord
@@ -45,7 +47,21 @@ public class GoogleInputTools {
         return char
     }
 
-    public func getInput() -> String {
-        input
+    public func pickSuggestion(_ index: Int) -> String? {
+        guard let response = currentResponse else {
+            return nil
+        }
+        guard response.status == GoogleInputResponse.Status.success else {
+            return nil
+        }
+        guard response.suggestions.count > index else {
+            return nil
+        }
+
+        let word = response.suggestions[index].word
+        let length = response.suggestions[index].matchedLength
+        currentResponse = nil
+        input = String(input.dropFirst(length))
+        return word
     }
 }

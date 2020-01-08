@@ -3,8 +3,6 @@ import KeyboardKit
 import UIKit
 
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
-    var inputTools: GoogleInputTools
-
     // MARK: - Initialization
 
     public init(inputViewController: UIInputViewController) {
@@ -17,6 +15,8 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     }
 
     // MARK: - Properties
+
+    private var inputTools: GoogleInputTools
 
     private var keyboardShiftState: KeyboardShiftState
 
@@ -110,19 +110,28 @@ private extension HongKongKeyboardActionHandler {
     }
 
     func handleSpace(for view: UIView) -> GestureAction {
-        let baseAction = super.tapAction(for: .space, view: view)
+        let suggestion = inputTools.pickSuggestion(0)
+        let action: KeyboardAction = suggestion != nil ? .character(suggestion!) : .space
+        let baseAction = super.tapAction(for: action, view: view)
         return { [weak self] in
             baseAction?()
-            let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
-            guard isNonAlpha else { return }
-            self?.switchToAlphabeticKeyboard(.lowercased)
+            if suggestion == nil {
+                let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
+                guard isNonAlpha else { return }
+                self?.switchToAlphabeticKeyboard(.lowercased)
+            }
         }
     }
 
-    func handleBackspace(for _: UIView) -> GestureAction {
-        { [weak self] in
-            self?.inputTools.popLast { currentWord, input, result in
+    func handleBackspace(for view: UIView) -> GestureAction {
+        let baseAction = super.tapAction(for: .backspace, view: view)
+        return { [weak self] in
+            let char = self?.inputTools.popLast { currentWord, input, result in
                 self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+            }
+
+            if char == nil {
+                baseAction?()
             }
         }
     }
