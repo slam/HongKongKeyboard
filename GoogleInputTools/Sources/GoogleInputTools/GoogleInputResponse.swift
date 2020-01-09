@@ -78,6 +78,7 @@ import Foundation
 // ]
 //
 public typealias GoogleInputResult = Result<GoogleInputResponse, Error>
+public typealias GoogleInputSuggestion = GoogleInputResponse.Suggestion
 
 public struct GoogleInputResponse: Decodable {
     enum CodingKeys: String, CodingKey {
@@ -103,6 +104,12 @@ public struct GoogleInputResponse: Decodable {
     public let input: String
     public let suggestions: [Suggestion]
 
+    public init() {
+        status = Status.success
+        input = ""
+        suggestions = []
+    }
+
     public init(from decoder: Decoder) throws {
         var container = try decoder.unkeyedContainer()
         let status = try container.decode(String.self)
@@ -113,20 +120,26 @@ public struct GoogleInputResponse: Decodable {
             return
         }
         var arrayContainer = try container.nestedUnkeyedContainer()
-        var arrayContainer2 = try arrayContainer.nestedUnkeyedContainer()
+        let optionalArrayContainer = try? arrayContainer.nestedUnkeyedContainer()
+        guard var arrayContainer2 = optionalArrayContainer else {
+            self.status = Status.success
+            self.input = ""
+            self.suggestions = []
+            return
+        }
         let input = try arrayContainer2.decode(String.self)
         let words = try arrayContainer2.decode([String].self)
         _ = try arrayContainer2.decode([String].self)
         let keyedContainer = try arrayContainer2.nestedContainer(keyedBy: CodingKeys.self)
-        let annotations = try keyedContainer.decode([String].self, forKey: .annotation)
-        let languageCodes = try keyedContainer.decode([String].self, forKey: .languageCode)
+        let annotations = try? keyedContainer.decode([String].self, forKey: .annotation)
+        let languageCodes = try? keyedContainer.decode([String].self, forKey: .languageCode)
         let matchedLengths = try? keyedContainer.decode([Int].self, forKey: .matchLength)
         var suggestions: [Suggestion] = []
         for (index, word) in words.enumerated() {
             let suggestion = Suggestion(word: word,
                                         matchedLength: matchedLengths?[index] ?? input.count,
-                                        annotation: annotations[index],
-                                        languageCode: languageCodes[index])
+                                        annotation: annotations?[index] ?? "",
+                                        languageCode: languageCodes?[index] ?? "")
             suggestions.append(suggestion)
         }
         self.status = Status.success

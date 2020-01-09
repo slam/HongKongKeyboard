@@ -13,19 +13,19 @@ class GoogleInputToolsTests: QuickSpec {
 
             it("can append and remove characters") {
                 inputTools.append("a")
-                expect(inputTools.getInput()).to(equal("a"))
+                expect(inputTools.input).to(equal("a"))
                 inputTools.append("b")
-                expect(inputTools.getInput()).to(equal("ab"))
+                expect(inputTools.input).to(equal("ab"))
                 inputTools.append("c")
-                expect(inputTools.getInput()).to(equal("abc"))
+                expect(inputTools.input).to(equal("abc"))
                 inputTools.popLast()
-                expect(inputTools.getInput()).to(equal("ab"))
+                expect(inputTools.input).to(equal("ab"))
                 inputTools.popLast()
-                expect(inputTools.getInput()).to(equal("a"))
+                expect(inputTools.input).to(equal("a"))
                 inputTools.popLast()
-                expect(inputTools.getInput()).to(equal(""))
+                expect(inputTools.input).to(equal(""))
                 inputTools.popLast()
-                expect(inputTools.getInput()).to(equal(""))
+                expect(inputTools.input).to(equal(""))
             }
         }
     }

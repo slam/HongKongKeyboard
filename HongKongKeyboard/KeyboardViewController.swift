@@ -1,3 +1,4 @@
+import GoogleInputTools
 import KeyboardKit
 import UIKit
 
@@ -6,7 +7,8 @@ class KeyboardViewController: KeyboardInputViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyboardActionHandler = HongKongKeyboardActionHandler(inputViewController: self)
+        keyboardActionHandler = HongKongKeyboardActionHandler(inputViewController: self,
+                                                              googleInputTools: inputTools)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -22,33 +24,39 @@ class KeyboardViewController: KeyboardInputViewController {
     // MARK: - Keyboard Functionality
 
     override func textDidChange(_ textInput: UITextInput?) {
+        print("textDidChange")
         super.textDidChange(textInput)
-        requestAutocompleteSuggestions()
+        requestSuggestions()
     }
 
     override func selectionWillChange(_ textInput: UITextInput?) {
+        print("selectionWillChange")
         super.selectionWillChange(textInput)
-        autocompleteToolbar.reset()
+        suggestionToolbar.reset()
     }
 
     override func selectionDidChange(_ textInput: UITextInput?) {
+        print("selectionDidChange")
         super.selectionDidChange(textInput)
-        autocompleteToolbar.reset()
+        suggestionToolbar.reset()
     }
 
     // MARK: - Properties
 
     let alerter = ToastAlert()
 
+    var inputTools = GoogleInputTools()
+
     var keyboardType = KeyboardType.alphabetic(uppercased: false) {
         didSet { setupKeyboard() }
     }
 
-    // MARK: - Autocomplete
-
-    lazy var autocompleteProvider = HongKongAutocompleteSuggestionProvider()
-
-    lazy var autocompleteToolbar: AutocompleteToolbar = {
-        AutocompleteToolbar(textDocumentProxy: textDocumentProxy)
+    lazy var suggestionToolbar: SuggestionToolbar = {
+        SuggestionToolbar {
+            SuggestionLabel(suggestion: $0,
+                            proxy: self.textDocumentProxy,
+                            inputTools: self.inputTools,
+                            keyboardViewController: self)
+        }
     }()
 }

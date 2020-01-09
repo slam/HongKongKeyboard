@@ -21,7 +21,7 @@ extension KeyboardViewController {
         var rows = actionRows.map {
             buttonRow(for: $0, distribution: distribution)
         }
-        rows.insert(autocompleteToolbar, at: 0)
+        rows.insert(suggestionToolbar, at: 0)
         return rows
     }
 }

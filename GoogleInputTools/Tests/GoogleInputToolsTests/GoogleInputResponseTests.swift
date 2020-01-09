@@ -176,6 +176,14 @@ let jsonResponseWithError = """
 ]
 """.data(using: .utf8)
 
+let jsonResponseForC = """
+["SUCCESS",[["c",[],[],{"candidate_type":[]}]]]
+""".data(using: .utf8)
+
+let jsonResponseEmpty = """
+["SUCCESS",[]]
+""".data(using: .utf8)
+
 class GoogleInputResponseTests: QuickSpec {
     override func spec() {
         describe("Decoding") {
@@ -219,6 +227,34 @@ class GoogleInputResponseTests: QuickSpec {
                     expect(response.suggestions[12].matchedLength).to(equal(2))
                     expect(response.suggestions[12].annotation).to(equal("dak"))
                     expect(response.suggestions[12].languageCode).to(equal("69"))
+                } catch {
+                    print(error.localizedDescription)
+                    expect(false).to(equal(true))
+                }
+            }
+
+            it("can decode response for c") {
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(GoogleInputResponse.self,
+                                                      from: jsonResponseForC!)
+                    expect(response).toNot(beNil())
+                    expect(response.status).to(equal(GoogleInputResponse.Status.success))
+                    expect(response.input).to(equal("c"))
+                } catch {
+                    print(error.localizedDescription)
+                    expect(false).to(equal(true))
+                }
+            }
+
+            it("can decode empty success") {
+                let decoder = JSONDecoder()
+                do {
+                    let response = try decoder.decode(GoogleInputResponse.self,
+                                                      from: jsonResponseEmpty!)
+                    expect(response).toNot(beNil())
+                    expect(response.status).to(equal(GoogleInputResponse.Status.success))
+                    expect(response.input).to(equal(""))
                 } catch {
                     print(error.localizedDescription)
                     expect(false).to(equal(true))
