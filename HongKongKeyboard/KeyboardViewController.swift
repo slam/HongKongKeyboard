@@ -26,37 +26,37 @@ class KeyboardViewController: KeyboardInputViewController {
     override func textDidChange(_ textInput: UITextInput?) {
         print("textDidChange")
         super.textDidChange(textInput)
-        requestAutocompleteSuggestions()
+        requestSuggestions()
     }
 
     override func selectionWillChange(_ textInput: UITextInput?) {
         print("selectionWillChange")
         super.selectionWillChange(textInput)
-        autocompleteToolbar.reset()
+        suggestionToolbar.reset()
     }
 
     override func selectionDidChange(_ textInput: UITextInput?) {
         print("selectionDidChange")
         super.selectionDidChange(textInput)
-        autocompleteToolbar.reset()
+        suggestionToolbar.reset()
     }
 
     // MARK: - Properties
 
     let alerter = ToastAlert()
 
+    var inputTools = GoogleInputTools()
+
     var keyboardType = KeyboardType.alphabetic(uppercased: false) {
         didSet { setupKeyboard() }
     }
 
-    var inputTools = GoogleInputTools()
-
-    // MARK: - Autocomplete
-
-    lazy var autocompleteToolbar: AutocompleteToolbar = {
-        AutocompleteToolbar(height: .standardKeyboardRowHeight,
-                            buttonCreator: { HongKongAutocompleteLabel(word: $0, proxy: self.textDocumentProxy) },
-                            alignment: .fill,
-                            distribution: .fillProportionally)
+    lazy var suggestionToolbar: SuggestionToolbar = {
+        SuggestionToolbar {
+            SuggestionLabel(suggestion: $0,
+                            proxy: self.textDocumentProxy,
+                            inputTools: self.inputTools,
+                            keyboardViewController: self)
+        }
     }()
 }

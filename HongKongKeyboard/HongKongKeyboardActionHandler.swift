@@ -51,7 +51,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     override func handle(_ gesture: KeyboardGesture, on action: KeyboardAction, view: UIView) {
         print("handle called")
         super.handle(gesture, on: action, view: view)
-        keyboardViewController?.requestAutocompleteSuggestions()
+        keyboardViewController?.requestSuggestions()
     }
 }
 
@@ -67,14 +67,14 @@ private extension HongKongKeyboardActionHandler {
         guard let input = inputViewController as? KeyboardViewController else { return }
 
         var count = 0
-        var words = [String]()
+        var suggestions = [GoogleInputSuggestion]()
         for suggestion in response.suggestions {
             count += suggestion.word.count
             if count < 15 {
-                words.append(suggestion.word)
+                suggestions.append(suggestion)
             }
         }
-        input.autocompleteToolbar.update(with: words)
+        input.suggestionToolbar.update(with: suggestions)
     }
 
     func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {

@@ -78,6 +78,7 @@ import Foundation
 // ]
 //
 public typealias GoogleInputResult = Result<GoogleInputResponse, Error>
+public typealias GoogleInputSuggestion = GoogleInputResponse.Suggestion
 
 public struct GoogleInputResponse: Decodable {
     enum CodingKeys: String, CodingKey {
@@ -104,9 +105,9 @@ public struct GoogleInputResponse: Decodable {
     public let suggestions: [Suggestion]
 
     public init() {
-        self.status = Status.success
-        self.input = ""
-        self.suggestions = []
+        status = Status.success
+        input = ""
+        suggestions = []
     }
 
     public init(from decoder: Decoder) throws {

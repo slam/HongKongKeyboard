@@ -16,10 +16,14 @@ public class GoogleInputTools {
 
         let thisInput = input
         let thisWord = currentWord
-        service.send(currentWord: currentWord, input: input) { result in
+        service.send(currentWord: currentWord, input: input) { [weak self] result in
             switch result {
             case let .success(response):
-                self.currentResponse = response
+                guard thisInput == self?.input else {
+                    print("Response was late for input \"\(thisInput)\". Discarding...")
+                    return
+                }
+                self?.currentResponse = response
             case .failure:
                 break
             }
@@ -35,10 +39,14 @@ public class GoogleInputTools {
 
         let thisInput = input
         let thisWord = currentWord
-        service.send(currentWord: currentWord, input: input) { result in
+        service.send(currentWord: currentWord, input: input) { [weak self] result in
             switch result {
             case let .success(response):
-                self.currentResponse = response
+                guard thisInput == self?.input else {
+                    print("Response was late for input \"\(thisInput)\". Discarding...")
+                    return
+                }
+                self?.currentResponse = response
             case .failure:
                 break
             }
@@ -51,6 +59,7 @@ public class GoogleInputTools {
                                   completion: ((String, String, GoogleInputResult) -> Void)? = nil) {
         self.currentWord = currentWord
         guard input.count > 0 else {
+            completion?(currentWord, input, .success(GoogleInputResponse()))
             return
         }
 
@@ -67,6 +76,14 @@ public class GoogleInputTools {
         }
     }
 
+    public func pickSuggestion(_ suggestion: GoogleInputSuggestion) -> String {
+        let word = suggestion.word
+        let length = suggestion.matchedLength
+        currentResponse = nil
+        input = String(input.dropFirst(length))
+        return word
+    }
+
     public func pickSuggestion(_ index: Int) -> String? {
         guard let response = currentResponse else {
             return nil
@@ -78,10 +95,6 @@ public class GoogleInputTools {
             return nil
         }
 
-        let word = response.suggestions[index].word
-        let length = response.suggestions[index].matchedLength
-        currentResponse = nil
-        input = String(input.dropFirst(length))
-        return word
+        return pickSuggestion(response.suggestions[index])
     }
 }

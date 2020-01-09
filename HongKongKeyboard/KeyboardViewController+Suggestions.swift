@@ -3,9 +3,9 @@ import KeyboardKit
 import UIKit
 
 extension KeyboardViewController {
-    func requestAutocompleteSuggestions() {
+    func requestSuggestions() {
         let word = textDocumentProxy.currentWord ?? ""
-        print("requestAutocompleteSuggestions word=\(word)")
+        print("requestSuggestions word=\(word)")
         inputTools.updateCurrentWord(word) { [weak self] _, _, result in
             switch result {
             case let .success(response):
@@ -14,15 +14,15 @@ extension KeyboardViewController {
                     return
                 }
                 var count = 0
-                var words = [String]()
+                var suggestions = [GoogleInputSuggestion]()
                 for suggestion in response.suggestions {
                     count += suggestion.word.count
                     if count < 15 {
-                        words.append(suggestion.word)
+                        suggestions.append(suggestion)
                     }
                 }
                 DispatchQueue.main.async {
-                    self?.handleAutocompleteSuggestionsResult(.success(words))
+                    self?.handleSuggestionsResult(.success(suggestions))
                 }
             case let .failure(error):
                 print(error.localizedDescription)
@@ -31,15 +31,15 @@ extension KeyboardViewController {
     }
 
     func resetAutocompleteSuggestions() {
-        autocompleteToolbar.reset()
+        suggestionToolbar.reset()
     }
 }
 
 private extension KeyboardViewController {
-    func handleAutocompleteSuggestionsResult(_ result: AutocompleteResult) {
+    func handleSuggestionsResult(_ result: Result<[GoogleInputSuggestion], Error>) {
         switch result {
         case let .failure(error): print(error.localizedDescription)
-        case let .success(result): autocompleteToolbar.update(with: result)
+        case let .success(result): suggestionToolbar.update(with: result)
         }
     }
 }
