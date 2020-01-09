@@ -31,7 +31,6 @@
 		846704B8234A725300355331 /* AlphabeticKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846704AD234A725300355331 /* AlphabeticKeyboard.swift */; };
 		846704B9234A725300355331 /* SymbolicKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846704AE234A725300355331 /* SymbolicKeyboard.swift */; };
 		846704BA234A725300355331 /* HongKongKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846704AF234A725300355331 /* HongKongKeyboard.swift */; };
-		846704BC234A725300355331 /* HongKongAutocompleteSuggestionProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846704B2234A725300355331 /* HongKongAutocompleteSuggestionProvider.swift */; };
 		846704BE234A727F00355331 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467046A234A718C00355331 /* Assets.swift */; };
 		846704BF234A727F00355331 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046B234A718C00355331 /* Colors.xcassets */; };
 		846704C0234A727F00355331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046C234A718C00355331 /* Images.xcassets */; };
@@ -109,7 +108,6 @@
 		846704AD234A725300355331 /* AlphabeticKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphabeticKeyboard.swift; sourceTree = "<group>"; };
 		846704AE234A725300355331 /* SymbolicKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SymbolicKeyboard.swift; sourceTree = "<group>"; };
 		846704AF234A725300355331 /* HongKongKeyboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HongKongKeyboard.swift; sourceTree = "<group>"; };
-		846704B2234A725300355331 /* HongKongAutocompleteSuggestionProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HongKongAutocompleteSuggestionProvider.swift; sourceTree = "<group>"; };
 		OBJ_246 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -159,7 +157,6 @@
 		8467045E234A711100355331 /* HongKongKeyboard */ = {
 			isa = PBXGroup;
 			children = (
-				846704B1234A725300355331 /* Autocomplete */,
 				846704A7234A725300355331 /* Buttons */,
 				846704AB234A725300355331 /* Keyboards */,
 				846704BD234A725900355331 /* Supporting Files */,
@@ -211,14 +208,6 @@
 				846704AE234A725300355331 /* SymbolicKeyboard.swift */,
 			);
 			path = Keyboards;
-			sourceTree = "<group>";
-		};
-		846704B1234A725300355331 /* Autocomplete */ = {
-			isa = PBXGroup;
-			children = (
-				846704B2234A725300355331 /* HongKongAutocompleteSuggestionProvider.swift */,
-			);
-			path = Autocomplete;
 			sourceTree = "<group>";
 		};
 		846704BD234A725900355331 /* Supporting Files */ = {
@@ -416,7 +405,6 @@
 				846704BE234A727F00355331 /* Assets.swift in Sources */,
 				846704B3234A725300355331 /* HongKongKeyboardActionHandler.swift in Sources */,
 				846704B6234A725300355331 /* HongKongAutocompleteLabel.swift in Sources */,
-				846704BC234A725300355331 /* HongKongAutocompleteSuggestionProvider.swift in Sources */,
 				846704BA234A725300355331 /* HongKongKeyboard.swift in Sources */,
 				846704B4234A725300355331 /* HongKongKeyboardButton.swift in Sources */,
 				846704B9234A725300355331 /* SymbolicKeyboard.swift in Sources */,

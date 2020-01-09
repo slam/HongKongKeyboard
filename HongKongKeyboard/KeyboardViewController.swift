@@ -53,8 +53,6 @@ class KeyboardViewController: KeyboardInputViewController {
 
     // MARK: - Autocomplete
 
-    lazy var autocompleteProvider = HongKongAutocompleteSuggestionProvider()
-
     lazy var autocompleteToolbar: AutocompleteToolbar = {
         AutocompleteToolbar(height: .standardKeyboardRowHeight,
                             buttonCreator: { HongKongAutocompleteLabel(word: $0, proxy: self.textDocumentProxy) },
