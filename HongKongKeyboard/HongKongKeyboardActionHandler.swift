@@ -5,9 +5,10 @@ import UIKit
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     // MARK: - Initialization
 
-    public init(inputViewController: UIInputViewController) {
+    public init(inputViewController: UIInputViewController,
+                googleInputTools: GoogleInputTools) {
         keyboardShiftState = .lowercased
-        inputTools = GoogleInputTools()
+        inputTools = googleInputTools
         super.init(
             inputViewController: inputViewController,
             hapticConfiguration: .standard
@@ -48,6 +49,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     // MARK: - Action Handling
 
     override func handle(_ gesture: KeyboardGesture, on action: KeyboardAction, view: UIView) {
+        print("handle called")
         super.handle(gesture, on: action, view: view)
         keyboardViewController?.requestAutocompleteSuggestions()
     }

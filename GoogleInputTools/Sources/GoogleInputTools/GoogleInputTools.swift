@@ -47,6 +47,26 @@ public class GoogleInputTools {
         return char
     }
 
+    public func updateCurrentWord(_ currentWord: String,
+                                  completion: ((String, String, GoogleInputResult) -> Void)? = nil) {
+        self.currentWord = currentWord
+        guard input.count > 0 else {
+            return
+        }
+
+        let thisInput = input
+        let thisWord = currentWord
+        service.send(currentWord: currentWord, input: input) { result in
+            switch result {
+            case let .success(response):
+                self.currentResponse = response
+            case .failure:
+                break
+            }
+            completion?(thisWord, thisInput, result)
+        }
+    }
+
     public func pickSuggestion(_ index: Int) -> String? {
         guard let response = currentResponse else {
             return nil

@@ -10,7 +10,7 @@ class HongKongAutocompleteLabel: UILabel {
         accessibilityTraits = .button
         textColor = textColor(for: proxy)
         addTapAction { [weak self] in
-            self?.proxy?.replaceCurrentWord(with: word)
+            self?.proxy?.insertText(word)
         }
     }
 
