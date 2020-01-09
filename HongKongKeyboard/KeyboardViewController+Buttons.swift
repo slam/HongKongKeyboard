@@ -6,6 +6,9 @@ extension KeyboardViewController {
         if action == .none { return KeyboardSpacerView(width: 10) }
         let view = HongKongKeyboardButton.fromNib(owner: self)
         view.setup(with: action, in: self, distribution: distribution)
+        if action == .space {
+            spacebarView = view
+        }
         return view
     }
 

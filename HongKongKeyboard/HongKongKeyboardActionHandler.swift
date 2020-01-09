@@ -63,6 +63,11 @@ private extension HongKongKeyboardActionHandler {
         input.alerter.alert(message: message, in: input.view, withDuration: 4)
     }
 
+    func updateSpacebarText(_ message: String) {
+        guard let input = inputViewController as? KeyboardViewController else { return }
+        input.updateSpacebarText(message)
+    }
+
     func updateToolbar(_ response: GoogleInputResponse) {
         guard let input = inputViewController as? KeyboardViewController else { return }
 
@@ -90,6 +95,7 @@ private extension HongKongKeyboardActionHandler {
             let message = "currentWord=\(currentWord) input=\(input) suggestion=\(firstSuggestion)"
             print(message)
             DispatchQueue.main.async {
+                self.updateSpacebarText(input)
                 self.updateToolbar(response)
             }
         case let .failure(error):
@@ -99,12 +105,17 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleCharacter(_ action: KeyboardAction, for _: UIView) -> GestureAction {
-        { [weak self] in
+    func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
+        let baseAction = super.tapAction(for: action, view: view)
+        return { [weak self] in
             switch action {
             case let .character(char):
-                self?.inputTools.append(char) { currentWord, input, result in
-                    self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                if char >= "a", char <= "z" {
+                    self?.inputTools.append(char) { currentWord, input, result in
+                        self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                    }
+                } else {
+                    baseAction?()
                 }
             default: return
             }

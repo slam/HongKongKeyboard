@@ -82,6 +82,7 @@ private extension KeyboardAction {
         switch self {
         case .none: return 10
         case .shift, .shiftDown, .backspace: return 60
+        case let .character(char) where "，。".contains(char): return 20
         case .space: return 100
         default: return 50
         }
