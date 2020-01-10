@@ -64,6 +64,7 @@ private extension KeyboardAction {
         case .newLine: return "return"
         case .shift, .shiftDown: return "⇧"
         case .space: return "粵語拼音"
+        case .function: return "'詞"
         case let .switchToKeyboard(type): return buttonText(for: type)
         default: return nil
         }
@@ -83,6 +84,7 @@ private extension KeyboardAction {
         case .none: return 10
         case .shift, .shiftDown, .backspace: return 60
         case let .character(char) where "，。".contains(char): return 20
+        case .function: return 30
         case .switchKeyboard: return 30
         case .space: return 100
         default: return 50
