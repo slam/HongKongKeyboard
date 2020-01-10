@@ -42,6 +42,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
         case .space: return handleSpace(for: view)
         case .backspace: return handleBackspace(for: view)
         case .newLine: return handleNewline(for: view)
+        case .function: return handleApostrophe(for: view)
         case let .switchToKeyboard(type): return { [weak self] in self?.keyboardViewController?.keyboardType = type }
         default: return super.tapAction(for: action, view: view)
         }
@@ -119,6 +120,14 @@ private extension HongKongKeyboardActionHandler {
                     baseAction?()
                 }
             default: return
+            }
+        }
+    }
+
+    func handleApostrophe(for _: UIView) -> GestureAction {
+        { [weak self] in
+            self?.inputTools.append("'") { currentWord, input, result in
+                self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
             }
         }
     }
