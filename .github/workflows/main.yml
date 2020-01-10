@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: macOS-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run xcodebuild test on GoogleInputTools swift package
+      run: xcodebuild test -project HongKongKeyboard.xcodeproj -scheme GoogleInputToolsTests -destination 'platform=iOS Simulator,name=iPhone 11' | xcpretty
+    - name: Build HongKongKeyboard extension
+      run: xcodebuild -project HongKongKeyboard.xcodeproj -scheme HongKongKeyboard -configuration Release -sdk iphonesimulator | xcpretty
