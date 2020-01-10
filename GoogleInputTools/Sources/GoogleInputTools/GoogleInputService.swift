@@ -14,9 +14,12 @@ import Foundation
 //
 class GoogleInputService: NSObject, GoogleInputServiceProtocol {
     func send(currentWord: String, input: String, completion: @escaping (GoogleInputResult) -> Void) {
-        var components = URLComponents(string: "https://inputtools.google.com/request")!
+        guard currentWord.count > 0 || input.count > 0 else {
+            return
+        }
 
-        let text = currentWord.isEmpty ? input : "|\(currentWord),\(input)"
+        var components = URLComponents(string: "https://inputtools.google.com/request")!
+        let text = currentWord.isEmpty ? input.lowercased() : "|\(currentWord),\(input.lowercased())"
         components.queryItems = [
             URLQueryItem(name: "text", value: text),
             URLQueryItem(name: "itc", value: "yue-hant-t-i0-und"),
