@@ -64,11 +64,15 @@ public class GoogleInputTools {
         }
 
         let thisInput = input
-        let thisWord = currentWord
-        service.send(currentWord: currentWord, input: input) { result in
+        let thisWord = self.currentWord
+        service.send(currentWord: currentWord, input: input) { [weak self] result in
             switch result {
             case let .success(response):
-                self.currentResponse = response
+                guard thisInput == self?.input else {
+                    print("Response was late for input \"\(thisInput)\". Discarding...")
+                    return
+                }
+                self?.currentResponse = response
             case .failure:
                 break
             }
@@ -96,5 +100,11 @@ public class GoogleInputTools {
         }
 
         return pickSuggestion(response.suggestions[index])
+    }
+
+    public func reset() {
+        input = ""
+        currentWord = ""
+        currentResponse = nil
     }
 }
