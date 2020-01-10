@@ -124,8 +124,8 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleApostrophe(for view: UIView) -> GestureAction {
-        return { [weak self] in
+    func handleApostrophe(for _: UIView) -> GestureAction {
+        { [weak self] in
             self?.inputTools.append("'") { currentWord, input, result in
                 self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
             }
