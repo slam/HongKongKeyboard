@@ -41,6 +41,7 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
         case .shiftDown: return switchToLowercaseKeyboard
         case .space: return handleSpace(for: view)
         case .backspace: return handleBackspace(for: view)
+        case .newLine: return handleNewline(for: view)
         case let .switchToKeyboard(type): return { [weak self] in self?.keyboardViewController?.keyboardType = type }
         default: return super.tapAction(for: action, view: view)
         }
@@ -61,6 +62,11 @@ private extension HongKongKeyboardActionHandler {
     func alert(_ message: String) {
         guard let input = inputViewController as? KeyboardViewController else { return }
         input.alerter.alert(message: message, in: input.view, withDuration: 4)
+    }
+
+    func updateSpacebarText(_ message: String) {
+        guard let input = inputViewController as? KeyboardViewController else { return }
+        input.updateSpacebarText(message)
     }
 
     func updateToolbar(_ response: GoogleInputResponse) {
@@ -90,6 +96,7 @@ private extension HongKongKeyboardActionHandler {
             let message = "currentWord=\(currentWord) input=\(input) suggestion=\(firstSuggestion)"
             print(message)
             DispatchQueue.main.async {
+                self.updateSpacebarText(input)
                 self.updateToolbar(response)
             }
         case let .failure(error):
@@ -99,12 +106,17 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleCharacter(_ action: KeyboardAction, for _: UIView) -> GestureAction {
-        { [weak self] in
+    func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
+        let baseAction = super.tapAction(for: action, view: view)
+        return { [weak self] in
             switch action {
             case let .character(char):
-                self?.inputTools.append(char) { currentWord, input, result in
-                    self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") {
+                    self?.inputTools.append(char) { currentWord, input, result in
+                        self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
+                    }
+                } else {
+                    baseAction?()
                 }
             default: return
             }
@@ -121,6 +133,18 @@ private extension HongKongKeyboardActionHandler {
                 let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
                 guard isNonAlpha else { return }
                 self?.switchToAlphabeticKeyboard(.lowercased)
+            }
+        }
+    }
+
+    func handleNewline(for view: UIView) -> GestureAction {
+        let input = inputTools.input
+        let action: KeyboardAction = input.count > 0 ? .character(input) : .newLine
+        let baseAction = super.tapAction(for: action, view: view)
+        return { [weak self] in
+            baseAction?()
+            if input.count > 0 {
+                self?.inputTools.reset()
             }
         }
     }

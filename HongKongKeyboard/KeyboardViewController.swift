@@ -41,11 +41,17 @@ class KeyboardViewController: KeyboardInputViewController {
         suggestionToolbar.reset()
     }
 
+    func updateSpacebarText(_ message: String) {
+        spacebarView?.textLabel?.text = message.count > 0 ? message : "粵語拼音"
+    }
+
     // MARK: - Properties
 
     let alerter = ToastAlert()
 
     var inputTools = GoogleInputTools()
+
+    var spacebarView: HongKongKeyboardButton?
 
     var keyboardType = KeyboardType.alphabetic(uppercased: false) {
         didSet { setupKeyboard() }
