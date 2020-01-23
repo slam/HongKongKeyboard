@@ -43,10 +43,9 @@ private extension AlphabeticKeyboard {
 private extension Sequence where Iterator.Element == KeyboardActionRow {
     func addingSideActions(uppercased: Bool) -> [Iterator.Element] {
         var result = map { $0 }
-        result[1].append(.none)
+        result[1].insert(.none, at: 0)
         result[1].append(.function)
         result[2].insert(uppercased ? .shiftDown : .shift, at: 0)
-        result[2].insert(.none, at: 1)
         result[2].append(.none)
         result[2].append(.backspace)
         return result

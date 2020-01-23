@@ -21,8 +21,8 @@ private extension NumericKeyboard {
 
     static let characters: [[String]] = [
         ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-        ["-", "/", ":", ";", "(", ")", "$", "&", "@", "\""],
-        [".", ",", "?", "!", "´"],
+        ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")"],
+        ["“", "”", "=", "、", "：", "；", "？", "！"],
     ]
 
     static var switchAction: KeyboardAction {
@@ -33,8 +33,7 @@ private extension NumericKeyboard {
 private extension Sequence where Iterator.Element == KeyboardActionRow {
     func addingSideActions() -> [Iterator.Element] {
         var actions = map { $0 }
-        actions[2].insert(.switchToKeyboard(.symbolic), at: 0)
-        actions[2].insert(.none, at: 1)
+        actions[2].insert(.none, at: 0)
         actions[2].append(.none)
         actions[2].append(.backspace)
         return actions
