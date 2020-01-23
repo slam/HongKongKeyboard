@@ -2,8 +2,10 @@ import KeyboardKit
 import UIKit
 
 class HongKongKeyboardButton: KeyboardButtonView {
-    public func setup(with action: KeyboardAction, in viewController: KeyboardInputViewController,
-                      distribution: UIStackView.Distribution = .fillEqually) {
+    public func setup(with action: KeyboardAction,
+                      in viewController: KeyboardInputViewController,
+                      distribution: UIStackView.Distribution = .fillEqually,
+                      size: CGSize) {
         super.setup(with: action, in: viewController)
         backgroundColor = .clearTappable
         buttonView?.backgroundColor = action.buttonColor(for: viewController)
@@ -12,7 +14,8 @@ class HongKongKeyboardButton: KeyboardButtonView {
         textLabel?.text = action.buttonText
         textLabel?.textColor = action.tintColor(in: viewController)
         buttonView?.tintColor = action.tintColor(in: viewController)
-        width = action.buttonWidth(for: distribution)
+        width = action.buttonWidth(for: distribution, size: size,
+                                   needsSwitchKeyboard: viewController.needsInputModeSwitchKey)
         applyShadow(.standardButtonShadow)
     }
 
@@ -74,26 +77,24 @@ private extension KeyboardAction {
         switch keyboardType {
         case .alphabetic: return "ABC"
         case .numeric: return "123"
-        case .symbolic: return "#+="
         default: return "???"
         }
     }
 
-    var buttonWidth: CGFloat {
+    func buttonWidth(for _: UIStackView.Distribution,
+                     size: CGSize,
+                     needsSwitchKeyboard: Bool) -> CGFloat {
+        let unitWidth = size.width / 10 // 10 keys per row
         switch self {
-        case .none: return 10
-        case .shift, .shiftDown, .backspace: return 60
-        case let .character(char) where "，。".contains(char): return 20
-        case .function: return 30
-        case .switchKeyboard: return 30
-        case .space: return 100
-        default: return 50
+        case .shift, .shiftDown: return unitWidth + unitWidth / 3
+        case .backspace: return unitWidth * 1.5
+        case .function: return unitWidth / 3
+        case .switchKeyboard: return unitWidth
+        case .switchToKeyboard: return needsSwitchKeyboard ? unitWidth : unitWidth * 1.5
+        case .newLine: return needsSwitchKeyboard ? unitWidth : unitWidth * 1.5
+        case .space: return unitWidth * 5
+        default: return unitWidth
         }
-    }
-
-    func buttonWidth(for distribution: UIStackView.Distribution) -> CGFloat {
-        let adjust = distribution == .fillProportionally
-        return adjust ? buttonWidth * 100 : buttonWidth
     }
 
     func tintColor(in viewController: KeyboardInputViewController) -> UIColor {
