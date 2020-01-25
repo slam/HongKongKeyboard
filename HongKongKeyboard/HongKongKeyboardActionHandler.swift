@@ -72,16 +72,7 @@ private extension HongKongKeyboardActionHandler {
 
     func updateToolbar(_ response: GoogleInputResponse) {
         guard let input = inputViewController as? KeyboardViewController else { return }
-
-        var count = 0
-        var suggestions = [GoogleInputSuggestion]()
-        for suggestion in response.suggestions {
-            count += suggestion.word.count
-            if count < 15 {
-                suggestions.append(suggestion)
-            }
-        }
-        input.suggestionToolbar.update(with: suggestions)
+        input.suggestionToolbar.update(with: response.suggestions)
     }
 
     func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {
