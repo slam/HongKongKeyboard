@@ -23,7 +23,7 @@ class GoogleInputService: NSObject, GoogleInputServiceProtocol {
         components.queryItems = [
             URLQueryItem(name: "text", value: text),
             URLQueryItem(name: "itc", value: "yue-hant-t-i0-und"),
-            URLQueryItem(name: "num", value: "13"),
+            URLQueryItem(name: "num", value: "30"),
             URLQueryItem(name: "cp", value: "0"),
             URLQueryItem(name: "cs", value: "1"),
             URLQueryItem(name: "ie", value: "utf-8"),

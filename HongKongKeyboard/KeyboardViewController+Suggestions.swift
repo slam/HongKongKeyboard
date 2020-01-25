@@ -13,17 +13,9 @@ extension KeyboardViewController {
                     print(response.status.rawValue)
                     return
                 }
-                var count = 0
-                var suggestions = [GoogleInputSuggestion]()
-                for suggestion in response.suggestions {
-                    count += suggestion.word.count
-                    if count < 15 {
-                        suggestions.append(suggestion)
-                    }
-                }
                 DispatchQueue.main.async {
                     self?.updateSpacebarText(input)
-                    self?.handleSuggestionsResult(.success(suggestions))
+                    self?.handleSuggestionsResult(.success(response.suggestions))
                 }
             case let .failure(error):
                 print(error.localizedDescription)

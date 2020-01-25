@@ -11,6 +11,7 @@
 		7536673023BD5C7A00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536672F23BD5C7A00FDB7D0 /* KeyboardKit */; };
 		7536673223BD619E00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536673123BD619E00FDB7D0 /* KeyboardKit */; };
 		75877FE223C1126400DEBDC7 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 75877FE123C1126400DEBDC7 /* GoogleInputTools */; };
+		75B82EAC23DC20A20065A646 /* SuggestionSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B82EAB23DC20A20065A646 /* SuggestionSeparator.swift */; };
 		84086E30235587DC0030D95A /* KeyboardViewController+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E2F235587DC0030D95A /* KeyboardViewController+Buttons.swift */; };
 		84086E32235588200030D95A /* KeyboardViewController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E31235588200030D95A /* KeyboardViewController+Suggestions.swift */; };
 		84086E3423558C0F0030D95A /* KeyboardViewController+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E3323558C0F0030D95A /* KeyboardViewController+Setup.swift */; };
@@ -83,6 +84,7 @@
 /* Begin PBXFileReference section */
 		7531A41623C6EBE500E75BF7 /* SuggestionToolbar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionToolbar.swift; sourceTree = "<group>"; };
 		75877FE023C1085C00DEBDC7 /* GoogleInputTools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GoogleInputTools; sourceTree = "<group>"; };
+		75B82EAB23DC20A20065A646 /* SuggestionSeparator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuggestionSeparator.swift; sourceTree = "<group>"; };
 		84086E2F235587DC0030D95A /* KeyboardViewController+Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardViewController+Buttons.swift"; sourceTree = "<group>"; };
 		84086E31235588200030D95A /* KeyboardViewController+Suggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardViewController+Suggestions.swift"; sourceTree = "<group>"; };
 		84086E3323558C0F0030D95A /* KeyboardViewController+Setup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardViewController+Setup.swift"; sourceTree = "<group>"; };
@@ -135,7 +137,9 @@
 		7531A41523C6EBE500E75BF7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				75B82EAB23DC20A20065A646 /* SuggestionSeparator.swift */,
 				7531A41623C6EBE500E75BF7 /* SuggestionToolbar.swift */,
+				846704AA234A725300355331 /* SuggestionLabel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -203,7 +207,6 @@
 			children = (
 				846704A8234A725300355331 /* HongKongKeyboardButton.swift */,
 				846704A9234A725300355331 /* HongKongKeyboardButton.xib */,
-				846704AA234A725300355331 /* SuggestionLabel.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -413,6 +416,7 @@
 				846704BE234A727F00355331 /* Assets.swift in Sources */,
 				846704B3234A725300355331 /* HongKongKeyboardActionHandler.swift in Sources */,
 				846704B6234A725300355331 /* SuggestionLabel.swift in Sources */,
+				75B82EAC23DC20A20065A646 /* SuggestionSeparator.swift in Sources */,
 				846704BA234A725300355331 /* HongKongKeyboard.swift in Sources */,
 				846704B4234A725300355331 /* HongKongKeyboardButton.swift in Sources */,
 				84086E32235588200030D95A /* KeyboardViewController+Suggestions.swift in Sources */,
@@ -846,7 +850,7 @@
 			repositoryURL = "https://github.com/danielsaidi/KeyboardKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.6.0;
+				version = 2.6.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

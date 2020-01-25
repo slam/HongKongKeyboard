@@ -3,13 +3,14 @@ import GoogleInputTools
 import KeyboardKit
 import UIKit
 
-public class SuggestionToolbar: KeyboardToolbar {
+class SuggestionToolbar: KeyboardToolbar {
     // MARK: - Initialization
 
     public init(buttonCreator: @escaping ButtonCreator) {
         self.buttonCreator = buttonCreator
         super.init(height: .standardKeyboardRowHeight, alignment: .fill, distribution: .fillProportionally)
         stackView.spacing = 0
+        enableScrolling()
     }
 
     public required init?(coder _: NSCoder) {
@@ -24,29 +25,64 @@ public class SuggestionToolbar: KeyboardToolbar {
 
     private let buttonCreator: ButtonCreator
 
+    private var scrollView: UIScrollView?
+
     private var suggestions: [GoogleInputSuggestion] = [] {
         didSet {
             let buttons = suggestions.map { buttonCreator($0) }
             stackView.removeAllArrangedSubviews()
             stackView.addArrangedSubviews(buttons)
+            removeLastSeparator(in: buttons)
         }
     }
 
     // MARK: - Functions
 
-    /**
-     Reset the toolbar by removing all suggestions.
-     */
     public func reset() {
         update(with: [])
     }
 
-    /**
-     Update the toolbar with new words. This will remove all
-     previously added views from the stack view and create a
-     new set of views for the new word collection.
-     */
+    private func enableScrolling() {
+        guard self.scrollView == nil else { return }
+        let scrollView = UIScrollView(frame: .zero)
+        addSubview(scrollView, fill: true)
+        stackView.removeAllConstraints()
+        scrollView.addSubview(stackView, fill: true)
+        stackView.heightAnchor.constraint(equalTo: scrollView.heightAnchor).isActive = true
+        self.scrollView = scrollView
+    }
+
     public func update(with suggestions: [GoogleInputSuggestion]) {
         self.suggestions = suggestions
+    }
+}
+
+private extension SuggestionToolbar {
+    func removeLastSeparator(in views: [UIView]) {
+        guard let view = views.last as? SuggestionLabel else { return }
+        view.suggestionSeparator.isHidden = true
+    }
+}
+
+extension UIView {
+    func removeAllConstraints() {
+        var parent = superview
+
+        while let superview = parent {
+            for constraint in superview.constraints {
+                if let first = constraint.firstItem as? UIView, first == self {
+                    superview.removeConstraint(constraint)
+                }
+
+                if let second = constraint.secondItem as? UIView, second == self {
+                    superview.removeConstraint(constraint)
+                }
+            }
+
+            parent = superview.superview
+        }
+
+        removeConstraints(constraints)
+        translatesAutoresizingMaskIntoConstraints = true
     }
 }
