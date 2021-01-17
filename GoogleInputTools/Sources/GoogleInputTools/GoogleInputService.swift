@@ -36,7 +36,7 @@ class GoogleInputService: NSObject, GoogleInputServiceProtocol {
 
         let task = URLSession.shared.dataTask(with: request) { result in
             switch result {
-            case let .success(_, data):
+            case let .success((_, data)):
                 do {
                     let res = try JSONDecoder().decode(GoogleInputResponse.self, from: data)
                     completion(Result.success(res))
