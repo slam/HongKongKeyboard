@@ -6,17 +6,17 @@
         "repositoryURL": "https://github.com/danielsaidi/KeyboardKit.git",
         "state": {
           "branch": null,
-          "revision": "ac0d9d1dcf066bb2f0d875313f7385102de6c094",
-          "version": "2.6.1"
+          "revision": "910d2594bd194a8dff0033f5f6e73cc9e73ea129",
+          "version": "3.5.2"
         }
       },
       {
-        "package": "Mockery",
-        "repositoryURL": "https://github.com/danielsaidi/Mockery.git",
+        "package": "KeyboardKitSwiftUI",
+        "repositoryURL": "https://github.com/danielsaidi/KeyboardKitSwiftUI",
         "state": {
           "branch": null,
-          "revision": "478d8eb6e5a76c2b2028c4246cd05c6c500d29de",
-          "version": "0.3.0"
+          "revision": "9319c6fc3fad7f5dae386e59c346ee1aeaf6263a",
+          "version": "3.5.2"
         }
       },
       {

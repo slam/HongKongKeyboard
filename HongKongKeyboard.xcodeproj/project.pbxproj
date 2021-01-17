@@ -12,6 +12,7 @@
 		7536673223BD619E00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536673123BD619E00FDB7D0 /* KeyboardKit */; };
 		75877FE223C1126400DEBDC7 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 75877FE123C1126400DEBDC7 /* GoogleInputTools */; };
 		75B82EAC23DC20A20065A646 /* SuggestionSeparator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B82EAB23DC20A20065A646 /* SuggestionSeparator.swift */; };
+		75C48D6425B40A7800BF528A /* KeyboardKitSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 75C48D6325B40A7800BF528A /* KeyboardKitSwiftUI */; };
 		84086E30235587DC0030D95A /* KeyboardViewController+Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E2F235587DC0030D95A /* KeyboardViewController+Buttons.swift */; };
 		84086E32235588200030D95A /* KeyboardViewController+Suggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E31235588200030D95A /* KeyboardViewController+Suggestions.swift */; };
 		84086E3423558C0F0030D95A /* KeyboardViewController+Setup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84086E3323558C0F0030D95A /* KeyboardViewController+Setup.swift */; };
@@ -127,6 +128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75877FE223C1126400DEBDC7 /* GoogleInputTools in Frameworks */,
+				75C48D6425B40A7800BF528A /* KeyboardKitSwiftUI in Frameworks */,
 				7536673223BD619E00FDB7D0 /* KeyboardKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +303,7 @@
 			packageProductDependencies = (
 				7536673123BD619E00FDB7D0 /* KeyboardKit */,
 				75877FE123C1126400DEBDC7 /* GoogleInputTools */,
+				75C48D6325B40A7800BF528A /* KeyboardKitSwiftUI */,
 			);
 			productName = HongKongKeyboard;
 			productReference = 8467045D234A711100355331 /* HongKongKeyboard.appex */;
@@ -339,6 +342,7 @@
 			mainGroup = OBJ_5;
 			packageReferences = (
 				7536672E23BD5C7A00FDB7D0 /* XCRemoteSwiftPackageReference "KeyboardKit" */,
+				75C48D6225B40A7800BF528A /* XCRemoteSwiftPackageReference "KeyboardKitSwiftUI" */,
 			);
 			productRefGroup = OBJ_231 /* Products */;
 			projectDirPath = "";
@@ -852,7 +856,15 @@
 			repositoryURL = "https://github.com/danielsaidi/KeyboardKit.git";
 			requirement = {
 				kind = exactVersion;
-				version = 2.6.1;
+				version = 3.5.2;
+			};
+		};
+		75C48D6225B40A7800BF528A /* XCRemoteSwiftPackageReference "KeyboardKitSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielsaidi/KeyboardKitSwiftUI";
+			requirement = {
+				kind = exactVersion;
+				version = 3.5.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -871,6 +883,11 @@
 		75877FE123C1126400DEBDC7 /* GoogleInputTools */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GoogleInputTools;
+		};
+		75C48D6325B40A7800BF528A /* KeyboardKitSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75C48D6225B40A7800BF528A /* XCRemoteSwiftPackageReference "KeyboardKitSwiftUI" */;
+			productName = KeyboardKitSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
