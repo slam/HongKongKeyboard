@@ -1,25 +1,25 @@
 import GoogleInputTools
 import KeyboardKit
+import KeyboardKitSwiftUI
 import UIKit
 
 class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     // MARK: - Initialization
 
-    public init(inputViewController: UIInputViewController,
-                googleInputTools: GoogleInputTools) {
-        keyboardShiftState = .lowercased
+    public init(
+        inputViewController: KeyboardViewController,
+        toastContext: KeyboardToastContext,
+        googleInputTools: GoogleInputTools) {
+        self.toastContext = toastContext
         inputTools = googleInputTools
-        super.init(
-            inputViewController: inputViewController,
-            hapticConfiguration: .standard
-        )
+        super.init(inputViewController: inputViewController)
     }
 
     // MARK: - Properties
 
-    private var inputTools: GoogleInputTools
+    private let toastContext: KeyboardToastContext
 
-    private var keyboardShiftState: KeyboardShiftState
+    private let inputTools: GoogleInputTools
 
     private var keyboardViewController: KeyboardViewController? {
         inputViewController as? KeyboardViewController
@@ -27,43 +27,25 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
 
     // MARK: - Actions
 
-    override func longPressAction(for action: KeyboardAction, view: UIView) -> GestureAction? {
+    override func tapAction(for action: KeyboardAction, sender: Any?) -> GestureAction? {
         switch action {
-        case .shift: return switchToCapsLockedKeyboard
-        default: return super.longPressAction(for: action, view: view)
+        case .character: return handleCharacter(action, sender: sender)
+        case .space: return handleSpace(sender: sender)
+        case .backspace: return handleBackspace(sender: sender)
+        case .newLine: return handleNewline(sender: sender)
+        case .function: return handleApostrophe(sender: sender)
+        default: return super.tapAction(for: action, sender: sender)
         }
     }
 
-    override func tapAction(for action: KeyboardAction, view: UIView) -> GestureAction? {
-        switch action {
-        case .character: return handleCharacter(action, for: view)
-        case .shift: return switchToUppercaseKeyboard
-        case .shiftDown: return switchToLowercaseKeyboard
-        case .space: return handleSpace(for: view)
-        case .backspace: return handleBackspace(for: view)
-        case .newLine: return handleNewline(for: view)
-        case .function: return handleApostrophe(for: view)
-        case let .switchToKeyboard(type): return { [weak self] in self?.keyboardViewController?.keyboardType = type }
-        default: return super.tapAction(for: action, view: view)
-        }
-    }
-
-    // MARK: - Action Handling
-
-    override func handle(_ gesture: KeyboardGesture, on action: KeyboardAction, view: UIView) {
-        print("handle called")
-        super.handle(gesture, on: action, view: view)
-        keyboardViewController?.requestSuggestions()
+    func alert(_ message: String) {
+        toastContext.present(message)
     }
 }
 
 // MARK: - Actions
 
 private extension HongKongKeyboardActionHandler {
-    func alert(_ message: String) {
-        guard let input = inputViewController as? KeyboardViewController else { return }
-        input.alerter.alert(message: message, in: input.view, withDuration: 4)
-    }
 
     func updateSpacebarText(_ message: String) {
         guard let input = inputViewController as? KeyboardViewController else { return }
@@ -72,7 +54,7 @@ private extension HongKongKeyboardActionHandler {
 
     func updateToolbar(_ response: GoogleInputResponse) {
         guard let input = inputViewController as? KeyboardViewController else { return }
-        input.suggestionToolbar.update(with: response.suggestions)
+        input.updateAutocompleteToolbar(response.suggestions)
     }
 
     func handleGoogleInputResult(currentWord: String, input: String, result: GoogleInputResult) {
@@ -98,8 +80,8 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleCharacter(_ action: KeyboardAction, for view: UIView) -> GestureAction {
-        let baseAction = super.tapAction(for: action, view: view)
+    func handleCharacter(_ action: KeyboardAction, sender: Any?) -> GestureAction {
+        let baseAction = super.tapAction(for: action, sender: sender)
         return { [weak self] in
             switch action {
             case let .character(char):
@@ -115,7 +97,7 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleApostrophe(for _: UIView) -> GestureAction {
+    func handleApostrophe(sender: Any?) -> GestureAction {
         { [weak self] in
             self?.inputTools.append("'") { currentWord, input, result in
                 self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
@@ -123,24 +105,20 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleSpace(for view: UIView) -> GestureAction {
+    func handleSpace(sender: Any?) -> GestureAction {
         let suggestion = inputTools.pickSuggestion(0)
         let action: KeyboardAction = suggestion != nil ? .character(suggestion!) : .space
-        let baseAction = super.tapAction(for: action, view: view)
+        let baseAction = super.tapAction(for: action, sender: sender)
         return { [weak self] in
             baseAction?()
-            if suggestion == nil {
-                let isNonAlpha = self?.keyboardViewController?.keyboardType != .alphabetic(uppercased: false)
-                guard isNonAlpha else { return }
-                self?.switchToAlphabeticKeyboard(.lowercased)
-            }
+            self?.inputViewController?.changeKeyboardType(to: .alphabetic(.lowercased))
         }
     }
 
-    func handleNewline(for view: UIView) -> GestureAction {
+    func handleNewline(sender: Any?) -> GestureAction {
         let input = inputTools.input
         let action: KeyboardAction = input.count > 0 ? .character(input) : .newLine
-        let baseAction = super.tapAction(for: action, view: view)
+        let baseAction = super.tapAction(for: action, sender: sender)
         return { [weak self] in
             baseAction?()
             if input.count > 0 {
@@ -149,8 +127,8 @@ private extension HongKongKeyboardActionHandler {
         }
     }
 
-    func handleBackspace(for view: UIView) -> GestureAction {
-        let baseAction = super.tapAction(for: .backspace, view: view)
+    func handleBackspace(sender: Any?) -> GestureAction {
+        let baseAction = super.tapAction(for: .backspace, sender: sender)
         return { [weak self] in
             let char = self?.inputTools.popLast { currentWord, input, result in
                 self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
@@ -160,22 +138,5 @@ private extension HongKongKeyboardActionHandler {
                 baseAction?()
             }
         }
-    }
-
-    func switchToAlphabeticKeyboard(_ state: KeyboardShiftState) {
-        keyboardShiftState = state
-        keyboardViewController?.keyboardType = .alphabetic(uppercased: state.isUppercased)
-    }
-
-    func switchToCapsLockedKeyboard() {
-        switchToAlphabeticKeyboard(.capsLocked)
-    }
-
-    func switchToLowercaseKeyboard() {
-        switchToAlphabeticKeyboard(.lowercased)
-    }
-
-    func switchToUppercaseKeyboard() {
-        switchToAlphabeticKeyboard(.uppercased)
     }
 }

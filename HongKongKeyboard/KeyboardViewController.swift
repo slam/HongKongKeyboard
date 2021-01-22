@@ -1,68 +1,103 @@
 import GoogleInputTools
 import KeyboardKit
-import UIKit
+import KeyboardKitSwiftUI
+import SwiftUI
+import Combine
 
 class KeyboardViewController: KeyboardInputViewController {
+
     // MARK: - View Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        keyboardActionHandler = HongKongKeyboardActionHandler(inputViewController: self,
-                                                              googleInputTools: inputTools)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setupKeyboard()
-    }
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        setupKeyboard(for: size)
-    }
-
-    // MARK: - Keyboard Functionality
-
-    override func textDidChange(_ textInput: UITextInput?) {
-        print("textDidChange")
-        super.textDidChange(textInput)
-        requestSuggestions()
-    }
-
-    override func selectionWillChange(_ textInput: UITextInput?) {
-        print("selectionWillChange")
-        super.selectionWillChange(textInput)
-        suggestionToolbar.reset()
-    }
-
-    override func selectionDidChange(_ textInput: UITextInput?) {
-        print("selectionDidChange")
-        super.selectionDidChange(textInput)
-        suggestionToolbar.reset()
-    }
-
-    func updateSpacebarText(_ message: String) {
-        spacebarView?.textLabel?.text = message.count > 0 ? message : "粵語拼音"
+        setup(with: keyboardView)
+        context.actionHandler = HongKongKeyboardActionHandler(
+            inputViewController: self,
+            toastContext: toastContext,
+            googleInputTools: inputTools)
+        context.keyboardAppearanceProvider = HongKongKeyboardAppearanceProvider()
+        context.keyboardLayoutProvider = StandardKeyboardLayoutProvider(
+            leftSpaceAction: .character("，"), rightSpaceAction: .character("。"))
+        context.keyboardInputSetProvider = HongKongKeyboardInputSetProvider()
+        context.locale = Locale.init(identifier: "zh")
     }
 
     // MARK: - Properties
 
-    let alerter = ToastAlert()
+    private var cancellables = [AnyCancellable]()
 
-    var inputTools = GoogleInputTools()
+    private let toastContext = KeyboardToastContext()
 
-    var spacebarView: HongKongKeyboardButton?
-
-    var keyboardType = KeyboardType.alphabetic(uppercased: false) {
-        didSet { setupKeyboard() }
+    private var keyboardView: some View {
+        HongKongKeyboardView(controller: self, inputTools: inputTools) { [weak self] suggestion, _ in
+            guard let pick = suggestion.additionalInfo["suggestion"] as? GoogleInputSuggestion else { return }
+            guard let word = self?.inputTools.pickSuggestion(pick) else { return }
+            self?.textDocumentProxy.insertText(word)
+            // textDidChange not firing - https://developer.apple.com/forums/thread/45121
+            self?.performAutocomplete()
+        }
+            .environmentObject(autocompleteContext)
+            .environmentObject(toastContext)
     }
 
-    lazy var suggestionToolbar: SuggestionToolbar = {
-        SuggestionToolbar {
-            SuggestionLabel(suggestion: $0,
-                            proxy: self.textDocumentProxy,
-                            inputTools: self.inputTools,
-                            keyboardViewController: self)
+    let inputTools = GoogleInputTools()
+
+//    var spacebarView: HongKongKeyboardButton?
+
+    // MARK: - Keyboard Functionality
+
+    open override func viewWillLayoutSubviews() {
+        context.hasDictationKey = hasDictationKey
+        // Hack to shut up the horrific log spam
+        context.needsInputModeSwitchKey = false
+    }
+
+    func updateSpacebarText(_ message: String) {
+//        spacebarView?.textLabel?.text = message.count > 0 ? message : "粵語拼音"
+    }
+
+    // MARK: - Autocomplete
+
+    struct Suggestion: AutocompleteSuggestion {
+
+        public var replacement: String
+        public var title: String { replacement }
+        public var subtitle: String?
+        public var additionalInfo: [String: Any]
+    }
+
+    private lazy var autocompleteContext = ObservableAutocompleteContext()
+
+    func updateAutocompleteToolbar(_ suggestions: [GoogleInputResponse.Suggestion]) {
+        autocompleteContext.suggestions = suggestions.map{
+            Suggestion(replacement: $0.word,
+                       additionalInfo: ["suggestion": $0])}
+    }
+
+    override func performAutocomplete() {
+        guard let word = textDocumentProxy.currentWord else { return resetAutocomplete() }
+        print("performAutocomplete word=\(word)")
+
+        guard word.count > 0 else { return resetAutocomplete() }
+
+        inputTools.updateCurrentWord(word) { [weak self] _, _, result in
+            switch result {
+            case let .success(response):
+                guard response.status == GoogleInputResponse.Status.success else {
+                    print(response.status.rawValue)
+                    return
+                }
+                DispatchQueue.main.async {
+                    self?.updateAutocompleteToolbar(response.suggestions)
+                    // TODO: update space bar text with input
+                }
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
         }
-    }()
+    }
+
+    override func resetAutocomplete() {
+        autocompleteContext.suggestions = []
+    }
 }
