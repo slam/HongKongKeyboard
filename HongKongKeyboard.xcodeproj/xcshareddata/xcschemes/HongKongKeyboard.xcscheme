@@ -59,8 +59,8 @@
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
          runnableDebuggingMode = "1"
-         BundleIdentifier = "com.apple.mobilenotes"
-         RemotePath = "/var/containers/Bundle/Application/7F0ED419-9FB5-4EAD-8231-9B9A26303692/MobileNotes.app">
+         BundleIdentifier = "com.apple.mobilesafari"
+         RemotePath = "/Applications/Xcode-12.3.app/Contents/Developer/Platforms/iPhoneOS.platform/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS.simruntime/Contents/Resources/RuntimeRoot/Applications/MobileSafari.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
@@ -71,6 +71,13 @@
             ReferencedContainer = "container:HongKongKeyboard.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "CG_NUMERICS_SHOW_BACKTRACE"
+            value = "1"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
