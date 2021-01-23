@@ -10,6 +10,7 @@
 		7536673023BD5C7A00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536672F23BD5C7A00FDB7D0 /* KeyboardKit */; };
 		7536673223BD619E00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536673123BD619E00FDB7D0 /* KeyboardKit */; };
 		75877FE223C1126400DEBDC7 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 75877FE123C1126400DEBDC7 /* GoogleInputTools */; };
+		75B9021F25BBE4DE004C5E8B /* KeystrokesContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B9021E25BBE4DE004C5E8B /* KeystrokesContext.swift */; };
 		75C48D6425B40A7800BF528A /* KeyboardKitSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 75C48D6325B40A7800BF528A /* KeyboardKitSwiftUI */; };
 		75C48D6625B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C48D6525B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift */; };
 		75C48D6825B4171900BF528A /* HongKongKeyboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C48D6725B4171900BF528A /* HongKongKeyboardView.swift */; };
@@ -77,6 +78,7 @@
 
 /* Begin PBXFileReference section */
 		75877FE023C1085C00DEBDC7 /* GoogleInputTools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GoogleInputTools; sourceTree = "<group>"; };
+		75B9021E25BBE4DE004C5E8B /* KeystrokesContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeystrokesContext.swift; sourceTree = "<group>"; };
 		75C48D6525B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HongKongKeyboardAppearanceProvider.swift; sourceTree = "<group>"; };
 		75C48D6725B4171900BF528A /* HongKongKeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HongKongKeyboardView.swift; sourceTree = "<group>"; };
 		75C48D6925B417A000BF528A /* HongKongKeyboardView+Keyboards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HongKongKeyboardView+Keyboards.swift"; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			children = (
 				846704BD234A725900355331 /* Supporting Files */,
 				846704A6234A725300355331 /* HongKongKeyboardActionHandler.swift */,
+				75B9021E25BBE4DE004C5E8B /* KeystrokesContext.swift */,
 				8467045F234A711100355331 /* KeyboardViewController.swift */,
 				75C48D6525B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift */,
 				75C48D6725B4171900BF528A /* HongKongKeyboardView.swift */,
@@ -372,6 +375,7 @@
 				846704BE234A727F00355331 /* Assets.swift in Sources */,
 				846704B3234A725300355331 /* HongKongKeyboardActionHandler.swift in Sources */,
 				75C48D7025B589D400BF528A /* HongKongKeyboardInputSetProvider.swift in Sources */,
+				75B9021F25BBE4DE004C5E8B /* KeystrokesContext.swift in Sources */,
 				75C48D6A25B417A000BF528A /* HongKongKeyboardView+Keyboards.swift in Sources */,
 				75C48D6625B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift in Sources */,
 				75C48D6825B4171900BF528A /* HongKongKeyboardView.swift in Sources */,

@@ -12,6 +12,7 @@ struct HongKongKeyboardView: View {
     @Environment(\.colorScheme) var colorScheme: ColorScheme
     @EnvironmentObject var context: ObservableKeyboardContext
     @EnvironmentObject var toastContext: KeyboardToastContext
+    @EnvironmentObject var keystrokesContext: KeystrokesContext
 
     var body: some View {
         keyboardView
