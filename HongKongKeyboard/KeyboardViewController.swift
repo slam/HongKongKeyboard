@@ -14,6 +14,7 @@ class KeyboardViewController: KeyboardInputViewController {
         context.actionHandler = HongKongKeyboardActionHandler(
             inputViewController: self,
             toastContext: toastContext,
+            keystrokesContext: keystrokesContext,
             googleInputTools: inputTools)
         context.keyboardAppearanceProvider = HongKongKeyboardAppearanceProvider()
         context.keyboardLayoutProvider = StandardKeyboardLayoutProvider(
@@ -28,6 +29,10 @@ class KeyboardViewController: KeyboardInputViewController {
 
     private let toastContext = KeyboardToastContext()
 
+    private let keystrokesContext = KeystrokesContext()
+
+    private let inputTools = GoogleInputTools()
+
     private var keyboardView: some View {
         HongKongKeyboardView(controller: self, inputTools: inputTools) { [weak self] suggestion, _ in
             guard let pick = suggestion.additionalInfo["suggestion"] as? GoogleInputSuggestion else { return }
@@ -38,11 +43,8 @@ class KeyboardViewController: KeyboardInputViewController {
         }
             .environmentObject(autocompleteContext)
             .environmentObject(toastContext)
+            .environmentObject(keystrokesContext)
     }
-
-    let inputTools = GoogleInputTools()
-
-//    var spacebarView: HongKongKeyboardButton?
 
     // MARK: - Keyboard Functionality
 
@@ -50,10 +52,6 @@ class KeyboardViewController: KeyboardInputViewController {
         context.hasDictationKey = hasDictationKey
         // Hack to shut up the horrific log spam
         context.needsInputModeSwitchKey = false
-    }
-
-    func updateSpacebarText(_ message: String) {
-//        spacebarView?.textLabel?.text = message.count > 0 ? message : "粵語拼音"
     }
 
     // MARK: - Autocomplete
@@ -71,6 +69,7 @@ class KeyboardViewController: KeyboardInputViewController {
     func updateAutocompleteToolbar(_ suggestions: [GoogleInputResponse.Suggestion]) {
         autocompleteContext.suggestions = suggestions.map{
             Suggestion(replacement: $0.word,
+                       subtitle: $0.annotation,
                        additionalInfo: ["suggestion": $0])}
     }
 
@@ -80,19 +79,23 @@ class KeyboardViewController: KeyboardInputViewController {
 
         guard word.count > 0 else { return resetAutocomplete() }
 
-        inputTools.updateCurrentWord(word) { [weak self] _, _, result in
+        inputTools.updateCurrentWord(word) { [weak self] _, input, result in
             switch result {
             case let .success(response):
                 guard response.status == GoogleInputResponse.Status.success else {
-                    print(response.status.rawValue)
+                    DispatchQueue.main.async {
+                        self?.toastContext.present(response.status.rawValue)
+                    }
                     return
                 }
                 DispatchQueue.main.async {
                     self?.updateAutocompleteToolbar(response.suggestions)
-                    // TODO: update space bar text with input
+                    self?.keystrokesContext.update(input)
                 }
             case let .failure(error):
-                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self?.toastContext.present(error.localizedDescription)
+                }
             }
         }
     }

@@ -9,8 +9,11 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     public init(
         inputViewController: KeyboardViewController,
         toastContext: KeyboardToastContext,
+        keystrokesContext: KeystrokesContext,
         googleInputTools: GoogleInputTools) {
+
         self.toastContext = toastContext
+        self.keystrokesContext = keystrokesContext
         inputTools = googleInputTools
         super.init(inputViewController: inputViewController)
     }
@@ -18,6 +21,8 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
     // MARK: - Properties
 
     private let toastContext: KeyboardToastContext
+
+    private let keystrokesContext: KeystrokesContext
 
     private let inputTools: GoogleInputTools
 
@@ -47,11 +52,6 @@ class HongKongKeyboardActionHandler: StandardKeyboardActionHandler {
 
 private extension HongKongKeyboardActionHandler {
 
-    func updateSpacebarText(_ message: String) {
-        guard let input = inputViewController as? KeyboardViewController else { return }
-        input.updateSpacebarText(message)
-    }
-
     func updateToolbar(_ response: GoogleInputResponse) {
         guard let input = inputViewController as? KeyboardViewController else { return }
         input.updateAutocompleteToolbar(response.suggestions)
@@ -70,7 +70,7 @@ private extension HongKongKeyboardActionHandler {
             let message = "currentWord=\(currentWord) input=\(input) suggestion=\(firstSuggestion)"
             print(message)
             DispatchQueue.main.async {
-                self.updateSpacebarText(input)
+                self.keystrokesContext.update(input)
                 self.updateToolbar(response)
             }
         case let .failure(error):

@@ -7,6 +7,9 @@ extension HongKongKeyboardView {
 
     var systemKeyboard: some View {
         VStack(spacing: 0) {
+            Text($keystrokesContext.keystrokes.wrappedValue)
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .leading)
             ScrollView(.horizontal, showsIndicators: false) {
                 AutocompleteToolbar(buttonBuilder: autocompleteButtonBuilder,
                                     replacementAction: replacementAction)
@@ -32,8 +35,8 @@ private extension HongKongKeyboardView {
     func autocompleteButton(for suggestion: AutocompleteSuggestion) -> AnyView {
         guard let subtitle = suggestion.subtitle else { return AutocompleteToolbar.standardButton(for: suggestion) }
         return AnyView(VStack(spacing: 0) {
-            Text(suggestion.title).font(.callout)
-            Text(subtitle).font(.footnote)
+            Text(suggestion.title).font(.callout).fixedSize()
+            Text(subtitle).font(.footnote).fixedSize()
         }.frame(maxWidth: .infinity))
     }
 
