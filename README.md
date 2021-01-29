@@ -22,6 +22,8 @@ correctly, which is "你好嗎".
 I really wanted to be able to use Google Input Tools on my iOS device. So I
 wrote my own iOS frontend for it.
 
+![Hong Kong Keyboard Demo](HongKongKeyboardDemo.gif)
+
 ## How does it work?
 
 Hong Kong Keyboard makes a network call to Google Input Tools on every
@@ -35,9 +37,9 @@ will observe delayed response. It is unavoidable.
 
 ## How do I install it?
 
-Sorry, this is not available on the Apple AppStore. It is too much hassle to
-go through the review process. I also don't have an active Apple developer
-account.
+Sorry, this is not available on the Apple AppStore. It is too much hassle to go
+through the review process. It is also unclear if the app could pass the review
+process.
 
 To install it, you have to build it in XCode and install it on your device.
-Version 12 works fine.
+XCode 12 works fine.
