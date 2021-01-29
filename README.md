@@ -41,5 +41,5 @@ Sorry, this is not available on the Apple AppStore. It is too much hassle to go
 through the review process. It is also unclear if the app could pass the review
 process.
 
-To install it, you have to build it in XCode and install it on your device.
-XCode 12 works fine.
+To install it, build it in XCode and run "HongKongKeyboardApp" on your
+device. XCode 12 works fine.
