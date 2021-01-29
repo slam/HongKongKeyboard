@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7536673023BD5C7A00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536672F23BD5C7A00FDB7D0 /* KeyboardKit */; };
 		7536673223BD619E00FDB7D0 /* KeyboardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7536673123BD619E00FDB7D0 /* KeyboardKit */; };
+		75624DB525C13CC00093695D /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75624DB425C13CC00093695D /* MainView.swift */; };
 		75877FE223C1126400DEBDC7 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 75877FE123C1126400DEBDC7 /* GoogleInputTools */; };
 		75B9021F25BBE4DE004C5E8B /* KeystrokesContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B9021E25BBE4DE004C5E8B /* KeystrokesContext.swift */; };
 		75C48D6425B40A7800BF528A /* KeyboardKitSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 75C48D6325B40A7800BF528A /* KeyboardKitSwiftUI */; };
@@ -18,9 +19,6 @@
 		75C48D7025B589D400BF528A /* HongKongKeyboardInputSetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C48D6F25B589D400BF528A /* HongKongKeyboardInputSetProvider.swift */; };
 		84670448234A709400355331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84670447234A709400355331 /* AppDelegate.swift */; };
 		8467044A234A709400355331 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84670449234A709400355331 /* SceneDelegate.swift */; };
-		8467044C234A709400355331 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467044B234A709400355331 /* ViewController.swift */; };
-		8467044F234A709400355331 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8467044D234A709400355331 /* Main.storyboard */; };
-		84670454234A709500355331 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84670452234A709500355331 /* LaunchScreen.storyboard */; };
 		84670460234A711100355331 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467045F234A711100355331 /* KeyboardViewController.swift */; };
 		84670464234A711100355331 /* HongKongKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8467045D234A711100355331 /* HongKongKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84670488234A718C00355331 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467046A234A718C00355331 /* Assets.swift */; };
@@ -77,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		75624DB425C13CC00093695D /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		75877FE023C1085C00DEBDC7 /* GoogleInputTools */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GoogleInputTools; sourceTree = "<group>"; };
 		75B9021E25BBE4DE004C5E8B /* KeystrokesContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeystrokesContext.swift; sourceTree = "<group>"; };
 		75C48D6525B416D500BF528A /* HongKongKeyboardAppearanceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HongKongKeyboardAppearanceProvider.swift; sourceTree = "<group>"; };
@@ -88,9 +87,6 @@
 		84670445234A709400355331 /* HongKongKeyboardApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HongKongKeyboardApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84670447234A709400355331 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84670449234A709400355331 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8467044B234A709400355331 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8467044E234A709400355331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		84670453234A709500355331 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84670455234A709500355331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8467045D234A711100355331 /* HongKongKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HongKongKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467045F234A711100355331 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
@@ -141,7 +137,7 @@
 				846704A5234A719200355331 /* Supporting Files */,
 				84670447234A709400355331 /* AppDelegate.swift */,
 				84670449234A709400355331 /* SceneDelegate.swift */,
-				8467044B234A709400355331 /* ViewController.swift */,
+				75624DB425C13CC00093695D /* MainView.swift */,
 			);
 			path = HongKongKeyboardApp;
 			sourceTree = "<group>";
@@ -174,8 +170,6 @@
 		846704A5234A719200355331 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				8467044D234A709400355331 /* Main.storyboard */,
-				84670452234A709500355331 /* LaunchScreen.storyboard */,
 				84670455234A709500355331 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -319,8 +313,6 @@
 			files = (
 				84670489234A718C00355331 /* Colors.xcassets in Resources */,
 				8467048A234A718C00355331 /* Images.xcassets in Resources */,
-				84670454234A709500355331 /* LaunchScreen.storyboard in Resources */,
-				8467044F234A709400355331 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,9 +353,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8467044C234A709400355331 /* ViewController.swift in Sources */,
 				84670448234A709400355331 /* AppDelegate.swift in Sources */,
 				84670488234A718C00355331 /* Assets.swift in Sources */,
+				75624DB525C13CC00093695D /* MainView.swift in Sources */,
 				8467044A234A709400355331 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,25 +384,6 @@
 			targetProxy = 84670462234A711100355331 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		8467044D234A709400355331 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8467044E234A709400355331 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		84670452234A709500355331 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				84670453234A709500355331 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		84670457234A709500355331 /* Debug */ = {
