@@ -1,15 +1,38 @@
-//
-//  MainView.swift
-//  HongKongKeyboardApp
-//
-//  Created by Sahn Lam on 1/26/21.
-//
-
 import SwiftUI
 
 struct MainView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("To enable 粵語拼音")
+                .fontWeight(.bold)
+                .font(.title)
+                .foregroundColor(.red)
+                .padding()
+            VStack(alignment: .leading) {
+                HStack(spacing: 5) {
+                    Text("Open")
+                    Button("Settings", action: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    })
+                }.padding()
+                HStack(spacing: 5) {
+                    Text("Tap")
+                    Text("Keyboards")
+                        .fontWeight(.bold)
+                }.padding()
+                HStack(spacing: 5) {
+                    Text("Turn on")
+                    Text("粵語拼音")
+                        .fontWeight(.bold)
+                }.padding()
+                HStack(spacing: 5) {
+                    Text("Turn on")
+                    Text("Allow Full Access")
+                        .fontWeight(.bold)
+                }.padding()
+            }
+            Spacer()
+        }
     }
 }
 
