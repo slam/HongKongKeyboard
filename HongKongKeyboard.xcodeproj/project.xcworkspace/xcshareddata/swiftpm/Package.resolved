@@ -1,43 +1,23 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "KeyboardKit",
-        "repositoryURL": "https://github.com/danielsaidi/KeyboardKit.git",
-        "state": {
-          "branch": null,
-          "revision": "d5269596bf7c9e8df14c1266c5366e1e95f37352",
-          "version": "3.6.0"
-        }
-      },
-      {
-        "package": "KeyboardKitSwiftUI",
-        "repositoryURL": "https://github.com/danielsaidi/KeyboardKitSwiftUI",
-        "state": {
-          "branch": null,
-          "revision": "3b782d79e5ea9f178453a00163ab76e5c3e1e507",
-          "version": "3.6.0"
-        }
-      },
-      {
-        "package": "Nimble",
-        "repositoryURL": "https://github.com/Quick/Nimble.git",
-        "state": {
-          "branch": null,
-          "revision": "f8657642dfdec9973efc79cc68bcef43a653a2bc",
-          "version": "8.0.2"
-        }
-      },
-      {
-        "package": "Quick",
-        "repositoryURL": "https://github.com/Quick/Quick.git",
-        "state": {
-          "branch": null,
-          "revision": "33682c2f6230c60614861dfc61df267e11a1602f",
-          "version": "2.2.0"
-        }
+  "pins" : [
+    {
+      "identity" : "googleinputtools",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/slam/GoogleInputTools",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c874064ac7a7b5d41145cf21e5ac8707128d379b"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "keyboardkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/KeyboardKit.git",
+      "state" : {
+        "revision" : "08fa552d785b015857e24043dc447a7cac257734",
+        "version" : "6.3.1"
+      }
+    }
+  ],
+  "version" : 2
 }
