@@ -11,7 +11,7 @@ class KeyboardAutocompleteProvider: AutocompleteProvider {
     init(context: KeyboardContext, inputToolsContext: InputToolsContext) {
         self.context = context
         self.inputToolsContext = inputToolsContext
-        inputService = GoogleInputService()
+        inputService = GoogleInputService(app: "粵語拼音", num: 100)
     }
 
     private let context: KeyboardContext
