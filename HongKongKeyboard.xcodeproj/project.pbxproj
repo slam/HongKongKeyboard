@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,7 @@
 		84670448234A709400355331 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84670447234A709400355331 /* AppDelegate.swift */; };
 		8467044A234A709400355331 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84670449234A709400355331 /* SceneDelegate.swift */; };
 		84670460234A711100355331 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467045F234A711100355331 /* KeyboardViewController.swift */; };
-		84670464234A711100355331 /* HongKongKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8467045D234A711100355331 /* HongKongKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		84670464234A711100355331 /* HongKongKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8467045D234A711100355331 /* HongKongKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		84670488234A718C00355331 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467046A234A718C00355331 /* Assets.swift */; };
 		84670489234A718C00355331 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046B234A718C00355331 /* Colors.xcassets */; };
 		8467048A234A718C00355331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046C234A718C00355331 /* Images.xcassets */; };
@@ -43,15 +43,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		84670468234A711100355331 /* Embed App Extensions */ = {
+		84670468234A711100355331 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				84670464234A711100355331 /* HongKongKeyboard.appex in Embed App Extensions */,
+				84670464234A711100355331 /* HongKongKeyboard.appex in Embed Foundation Extensions */,
 			);
-			name = "Embed App Extensions";
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		84670510234A745A00355331 /* Embed Frameworks */ = {
@@ -225,7 +225,7 @@
 				84670441234A709400355331 /* Sources */,
 				84670442234A709400355331 /* Frameworks */,
 				84670443234A709400355331 /* Resources */,
-				84670468234A711100355331 /* Embed App Extensions */,
+				84670468234A711100355331 /* Embed Foundation Extensions */,
 				84670510234A745A00355331 /* Embed Frameworks */,
 				755F666423BEA32600BF7680 /* Run swiftlint */,
 			);
@@ -273,7 +273,7 @@
 			attributes = {
 				LastSwiftMigration = 9999;
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1230;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					84670444234A709400355331 = {
 						CreatedOnToolsVersion = 11.0;
@@ -334,6 +334,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		755F666423BEA32600BF7680 /* Run swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
