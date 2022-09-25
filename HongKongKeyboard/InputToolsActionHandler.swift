@@ -14,7 +14,7 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
 
     func tapAction(for action: KeyboardAction) -> KeyboardAction.GestureAction? {
         switch action {
-        case .character: return handleCharacter(action)
+        case .character, .characterMargin: return handleCharacter(action)
         // case .space: return handleSpace(sender: sender)
         case .backspace: return handleBackspace(action)
         // case .newLine: return handleNewline(sender: sender)
@@ -32,7 +32,7 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
 
     func handleCharacter(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
         switch action {
-        case let .character(char):
+        case let .character(char), let .characterMargin(char):
             if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") {
                 return { _ in
                     self.inputToolsContext.append(char)
