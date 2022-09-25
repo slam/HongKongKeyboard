@@ -3,7 +3,8 @@ import GoogleInputTools
 import KeyboardKit
 
 enum GoogleInputToolsError: Error {
-    case badStatus(status: String)
+    case parsingError(status: String)
+    case lateArriving(input: String)
 }
 
 class KeyboardAutocompleteProvider: AutocompleteProvider {
@@ -40,18 +41,32 @@ class KeyboardAutocompleteProvider: AutocompleteProvider {
 private extension KeyboardAutocompleteProvider {
     func fetchGoogleInputToolsSuggestions(for text: String, completion: @escaping AutocompleteCompletion) {
         let currentWord = context.textDocumentProxy.currentWord ?? ""
-        print("fetchGoogleInputToolsSuggestions text=\(text) currentWord=\(currentWord)")
-        inputService.send(currentWord: currentWord, input: text) { result in
+        #if DEBUG
+            print("fetchGoogleInputToolsSuggestions text=\(text) currentWord=\(currentWord)")
+        #endif
+        inputService.send(currentWord: currentWord, input: text) { [weak self] result in
             switch result {
             case let .success(response):
-                if response.status != GoogleInputResponse.Status.success {
-                    print(response.status.rawValue)
-                    completion(.failure(GoogleInputToolsError.badStatus(status: response.status.rawValue)))
+                guard response.status == GoogleInputResponse.Status.success else {
+                    #if DEBUG
+                        print(response.status.rawValue)
+                    #endif
+                    completion(.failure(GoogleInputToolsError.parsingError(status: response.status.rawValue)))
+                    return
+                }
+                guard text == self?.inputToolsContext.input else {
+                    #if DEBUG
+                        let message = "Response was late for \"\(text)\". Discarding..."
+                        print(message)
+                    #endif
+                    completion(.failure(GoogleInputToolsError.lateArriving(input: text)))
                     return
                 }
                 let firstSuggestion = response.suggestions.count > 0 ? response.suggestions[0].word : ""
-                let message = "currentWord=\(currentWord) input=\(text) suggestion=\(firstSuggestion)"
-                print(message)
+                #if DEBUG
+                    let message = "currentWord=\(currentWord) input=\(text) suggestion=\(firstSuggestion)"
+                    print(message)
+                #endif
                 completion(.success(
                     response.suggestions.map {
                         StandardAutocompleteSuggestion(text: $0.word,
@@ -60,11 +75,26 @@ private extension KeyboardAutocompleteProvider {
                     }))
                 return
             case let .failure(error):
-                let message = "currentWord=\(currentWord) input=\(text) error=\(error.localizedDescription)"
-                print(message)
+                #if DEBUG
+                    let message = "currentWord=\(currentWord) input=\(text) error=\(error.localizedDescription)"
+                    print(message)
+                #endif
                 completion(.failure(error))
                 return
             }
+        }
+    }
+}
+
+extension GoogleInputToolsError: LocalizedError {
+    var errorDescription: String? {
+        switch self {
+        case let .parsingError(status):
+            let format = NSLocalizedString("Google Input Tools returned '%@'", comment: "")
+            return String(format: format, status)
+        case let .lateArriving(input):
+            let format = NSLocalizedString("Response was late for '%@'", comment: "")
+            return String(format: format, input)
         }
     }
 }

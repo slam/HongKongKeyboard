@@ -4,6 +4,8 @@ import UIKit
 
 // - custom keyboard layout, with chinese punctuations, space bar text and '
 // - update main app look and feel, add check for full access
+// - some charactersleak to the text proxy
+// - update GoogleInputTools to remove the top level lib
 // - add haptic and audio feedback
 
 class KeyboardViewController: KeyboardInputViewController {
