@@ -8,16 +8,22 @@ struct KeyboardAutocompleteToolbar: View {
     @EnvironmentObject private var inputToolsContext: InputToolsContext
 
     var body: some View {
-        if let error = context.lastError {
-            Text(error.localizedDescription).frame(height: 50)
-        } else {
-            AutocompleteToolbar(
-                suggestions: context.suggestions,
-                locale: keyboardContext.locale,
-                action: selectSuggestionAction
-            )
-            .frame(height: 50)
+        ScrollView(.horizontal) {
+            if let error = context.lastError {
+                Text(error.localizedDescription).fixedSize()
+            } else {
+                AutocompleteToolbar(
+                    suggestions: context.suggestions,
+                    locale: keyboardContext.locale,
+                    action: selectSuggestionAction
+                ).fixedSize()
+            }
         }
+        .frame(height: 50)
+
+        Text(inputToolsContext.input)
+            .font(.footnote)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     func selectSuggestionAction(for suggestion: AutocompleteSuggestion) {

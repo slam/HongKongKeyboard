@@ -2,11 +2,11 @@ import GoogleInputTools
 import KeyboardKit
 import UIKit
 
-// TODO
+// TODO:
 //
 // - custom keyboard layout, with chinese punctuations, space bar text and '
-// - add back horizontal scroll to the autocomplete toolbar
 // - update main app look and feel, add check for full access
+// - add haptic and audio feedback
 
 class KeyboardViewController: KeyboardInputViewController {
     override func viewDidLoad() {

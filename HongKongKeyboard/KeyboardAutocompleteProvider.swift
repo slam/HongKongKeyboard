@@ -53,7 +53,7 @@ private extension KeyboardAutocompleteProvider {
                 let message = "currentWord=\(currentWord) input=\(text) suggestion=\(firstSuggestion)"
                 print(message)
                 completion(.success(
-                    response.suggestions.prefix(5).map {
+                    response.suggestions.map {
                         StandardAutocompleteSuggestion(text: $0.word,
                                                        subtitle: $0.annotation,
                                                        additionalInfo: ["suggestion": $0])
