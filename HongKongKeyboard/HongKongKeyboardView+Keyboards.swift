@@ -1,9 +1,9 @@
-//import GoogleInputTools
-//import KeyboardKit
-//import KeyboardKitSwiftUI
-//import SwiftUI
+// import GoogleInputTools
+// import KeyboardKit
+// import KeyboardKitSwiftUI
+// import SwiftUI
 //
-//extension HongKongKeyboardView {
+// extension HongKongKeyboardView {
 //
 //    var systemKeyboard: some View {
 //        VStack(spacing: 0) {
@@ -28,9 +28,9 @@
 //            .cornerRadius(3)
 //            .shadow(color: Color.black.opacity(0.3), radius: 2, x: 1, y: 1)
 //    }
-//}
+// }
 //
-//private extension HongKongKeyboardView {
+// private extension HongKongKeyboardView {
 //
 //    func autocompleteButton(for suggestion: AutocompleteSuggestion) -> AnyView {
 //        guard let subtitle = suggestion.subtitle else { return AutocompleteToolbar.standardButton(for: suggestion) }
@@ -51,4 +51,4 @@
 //        default: return SystemKeyboard.standardButtonBuilder(action: action, keyboardSize: size)
 //        }
 //    }
-//}
+// }

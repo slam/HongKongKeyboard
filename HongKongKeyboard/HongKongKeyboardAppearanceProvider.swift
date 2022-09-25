@@ -1,7 +1,7 @@
-//import KeyboardKit
-//import UIKit
+// import KeyboardKit
+// import UIKit
 //
-//class HongKongKeyboardAppearanceProvider: StandardKeyboardAppearanceProvider {
+// class HongKongKeyboardAppearanceProvider: StandardKeyboardAppearanceProvider {
 //
 //    override func font(for action: KeyboardAction) -> UIFont {
 //        switch action {
@@ -16,4 +16,4 @@
 //        default: return super.text(for: action)
 //        }
 //    }
-//}
+// }

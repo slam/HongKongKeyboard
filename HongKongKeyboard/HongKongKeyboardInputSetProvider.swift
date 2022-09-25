@@ -1,6 +1,6 @@
-//import KeyboardKit
+// import KeyboardKit
 //
-//open class HongKongKeyboardInputSetProvider: KeyboardInputSetProvider {
+// open class HongKongKeyboardInputSetProvider: KeyboardInputSetProvider {
 //
 //    static var numeric: NumericKeyboardInputSet {
 //        NumericKeyboardInputSet(inputRows: [
@@ -21,4 +21,4 @@
 //    public func symbolicInputSet(for context: KeyboardContext) -> SymbolicKeyboardInputSet {
 //        return KeyboardInputSet.symbolic_en
 //    }
-//}
+// }
