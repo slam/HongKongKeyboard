@@ -19,6 +19,7 @@ struct KeyboardAutocompleteToolbar: View {
                 ).fixedSize()
             }
         }
+        .id(inputToolsContext.input) // scroll back to far left on every keystroke
         .frame(height: 50)
 
         Text(inputToolsContext.input)
