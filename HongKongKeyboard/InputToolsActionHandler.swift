@@ -15,10 +15,9 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
     func tapAction(for action: KeyboardAction) -> KeyboardAction.GestureAction? {
         switch action {
         case .character, .characterMargin: return handleCharacter(action)
-        // case .space: return handleSpace(sender: sender)
+        case .space: return handleSpace(action)
         case .backspace: return handleBackspace(action)
-        // case .newLine: return handleNewline(sender: sender)
-        // case .function: return handleApostrophe(sender: sender)
+        case .return, .newLine: return handleNewline(action)
         default: return action.standardTapAction
         }
     }
@@ -33,7 +32,10 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
     func handleCharacter(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
         switch action {
         case let .character(char), let .characterMargin(char):
-            if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") {
+            // Use ' to explicitly separates pronunciation of two characters.
+            // For example, "long" can be interpreted into "long" or "lo-ng",
+            // while "lo'ng" will only be interpreted into "lo-ng".
+            if (char >= "a" && char <= "z") || (char >= "A" && char <= "Z") || (char == "'") {
                 return { _ in
                     self.inputToolsContext.append(char)
                 }
@@ -46,43 +48,34 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
     }
 
     func handleBackspace(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
-        if inputToolsContext.input != "" {
-            return { _ in
-                _ = self.inputToolsContext.popLast()
-            }
+        guard inputToolsContext.input != "" else { return action.standardTapAction }
+        return { _ in
+            _ = self.inputToolsContext.popLast()
         }
-
-        return action.standardTapAction
     }
 
-//    func handleApostrophe(sender: Any?) -> GestureAction {
-//        { [weak self] in
-//            self?.inputTools.append("'") { currentWord, input, result in
-//                self?.handleGoogleInputResult(currentWord: currentWord, input: input, result: result)
-//            }
-//        }
-//    }
-//
-//    func handleSpace(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
-//        let suggestion = inputTools.pickSuggestion(0)
-//        let action: KeyboardAction = suggestion != nil ? .character(suggestion!) : .space
-//        let baseAction = super.tapAction(for: action, sender: sender)
-//        return { [weak self] in
-//            baseAction?()
-//            self?.inputViewController?.changeKeyboardType(to: .alphabetic(.lowercased))
-//        }
-//    }
-//
-//    func handleNewline(sender: Any?) -> GestureAction {
-//        let input = inputTools.input
-//        let action: KeyboardAction = input.count > 0 ? .character(input) : .newLine
-//        let baseAction = super.tapAction(for: action, sender: sender)
-//        return { [weak self] in
-//            baseAction?()
-//            if input.count > 0 {
-//                self?.inputTools.reset()
-//            }
-//        }
-//    }
-//
+    func handleSpace(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
+        guard autocompleteContext.suggestions.count > 0 else { return action.standardTapAction }
+        let suggestion = autocompleteContext.suggestions[0]
+        return {
+            switch suggestion.additionalInfo["suggestion"] {
+            case let inputToolsSuggestion as GoogleInputSuggestion:
+                self.inputToolsContext.pick(inputToolsSuggestion)
+            default:
+                break
+            }
+            $0?.textDocumentProxy.insertText(suggestion.text)
+        }
+    }
+
+    func handleNewline(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
+        // Hit `Enter` to type in the English letters entered so far.
+        guard inputToolsContext.input.count > 0 else { return action.standardTapAction }
+
+        return {
+            let input = self.inputToolsContext.input
+            self.inputToolsContext.reset()
+            $0?.textDocumentProxy.insertText(input)
+        }
+    }
 }

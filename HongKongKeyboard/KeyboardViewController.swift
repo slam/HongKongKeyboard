@@ -10,6 +10,14 @@ class KeyboardViewController: KeyboardInputViewController {
     override func viewDidLoad() {
         autocompleteProvider = KeyboardAutocompleteProvider(context: keyboardContext,
                                                             inputToolsContext: inputToolsContext)
+
+        inputSetProvider = InputToolsInputSetProvider()
+
+        keyboardLayoutProvider = InputToolsLayoutProvider(
+            inputSetProvider: inputSetProvider,
+            dictationReplacement: nil
+        )
+
         keyboardActionHandler = InputToolsActionHandler(inputViewController: self, inputToolsContext: inputToolsContext)
         super.viewDidLoad()
     }

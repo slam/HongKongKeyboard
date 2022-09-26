@@ -25,6 +25,7 @@ struct KeyboardAutocompleteToolbar: View {
         Text(inputToolsContext.input)
             .font(.footnote)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: 20)
     }
 
     func selectSuggestionAction(for suggestion: AutocompleteSuggestion) {

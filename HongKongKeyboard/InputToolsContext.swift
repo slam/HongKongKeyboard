@@ -24,4 +24,8 @@ public class InputToolsContext: ObservableObject {
         }
         return char
     }
+
+    public func reset() {
+        input = ""
+    }
 }
