@@ -2,20 +2,27 @@ import GoogleInputTools
 import KeyboardKit
 import UIKit
 
-// - custom keyboard layout, with chinese punctuations, space bar text and '
+// - new punctation layout only for zh locale
 // - update main app look and feel, add check for full access
 // - add haptic and audio feedback?
 
 class KeyboardViewController: KeyboardInputViewController {
     override func viewDidLoad() {
+        KKL10n.bundle = Bundle.main
+
+        keyboardContext.locale = Locale(identifier: "zh")
+        keyboardContext.locales = [Locale(identifier: "en"), Locale(identifier: "zh")]
+
         autocompleteProvider = KeyboardAutocompleteProvider(context: keyboardContext,
                                                             inputToolsContext: inputToolsContext)
 
         inputSetProvider = InputToolsInputSetProvider()
 
+        keyboardAppearance = InputToolsAppearance(context: keyboardContext)
+
         keyboardLayoutProvider = InputToolsLayoutProvider(
             inputSetProvider: inputSetProvider,
-            dictationReplacement: nil
+            dictationReplacement: .custom(named: "中")
         )
 
         keyboardActionHandler = InputToolsActionHandler(inputViewController: self, inputToolsContext: inputToolsContext)

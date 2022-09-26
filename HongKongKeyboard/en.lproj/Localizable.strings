@@ -1,0 +1,12 @@
+"locale" = "en";
+
+"done" = "done";
+"go" = "go";
+"ok" = "OK";
+"return" = "return";
+"search" = "search";
+"space" = "space";
+
+"keyboardTypeAlphabetic" = "ABC";
+"keyboardTypeNumeric" = "123";
+"keyboardTypeSymbolic" = "#+=";

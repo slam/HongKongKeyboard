@@ -1,0 +1,12 @@
+"locale" = "zh";
+
+"done" = "完成";
+"go" = "go";
+"ok" = "OK";
+"return" = "下行";
+"search" = "search";
+"space" = "空格";
+
+"keyboardTypeAlphabetic" = "ABC";
+"keyboardTypeNumeric" = "123";
+"keyboardTypeSymbolic" = "#+=";

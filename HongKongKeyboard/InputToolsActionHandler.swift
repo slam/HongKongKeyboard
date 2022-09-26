@@ -1,5 +1,6 @@
 import GoogleInputTools
 import KeyboardKit
+import UIKit
 
 class InputToolsActionHandler: StandardKeyboardActionHandler {
     public init(
@@ -18,6 +19,7 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
         case .space: return handleSpace(action)
         case .backspace: return handleBackspace(action)
         case .return, .newLine: return handleNewline(action)
+        case .custom: return handleLocaleChange(action)
         default: return action.standardTapAction
         }
     }
@@ -30,6 +32,9 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
     }
 
     func handleCharacter(_ action: KeyboardAction) -> KeyboardAction.GestureAction? {
+        guard keyboardContext.locale == Locale(identifier: "zh") else {
+            return action.standardTapAction
+        }
         switch action {
         case let .character(char), let .characterMargin(char):
             // Use ' to explicitly separates pronunciation of two characters.
@@ -76,6 +81,17 @@ class InputToolsActionHandler: StandardKeyboardActionHandler {
             let input = self.inputToolsContext.input
             self.inputToolsContext.reset()
             $0?.textDocumentProxy.insertText(input)
+        }
+    }
+
+    func handleLocaleChange(_: KeyboardAction) -> KeyboardAction.GestureAction? {
+        return { _ in
+            switch self.keyboardContext.locale {
+            case Locale(identifier: "en"): self.keyboardContext.locale = Locale(identifier: "zh")
+            default:
+                self.inputToolsContext.reset()
+                self.keyboardContext.locale = Locale(identifier: "en")
+            }
         }
     }
 }

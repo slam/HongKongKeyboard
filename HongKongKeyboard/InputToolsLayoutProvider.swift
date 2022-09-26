@@ -8,8 +8,8 @@ class InputToolsLayoutProvider: StandardKeyboardLayoutProvider {
         let rowIndex = rows.count - 1
         guard let system = (rows[rowIndex].first { $0.action.isSystemAction }) else { return layout }
 
-        let switcher = KeyboardLayoutItem(action: .character("'"), size: system.size, insets: system.insets)
-        rows.insert(switcher, after: .space, atRow: rowIndex)
+        let apostrophe = KeyboardLayoutItem(action: .character("'"), size: system.size, insets: system.insets)
+        rows.insert(apostrophe, after: .space, atRow: rowIndex)
 
         return KeyboardLayout(itemRows: rows)
     }
