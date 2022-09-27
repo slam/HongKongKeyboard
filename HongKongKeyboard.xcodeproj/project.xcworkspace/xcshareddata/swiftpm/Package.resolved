@@ -17,6 +17,15 @@
         "revision" : "08fa552d785b015857e24043dc447a7cac257734",
         "version" : "6.3.1"
       }
+    },
+    {
+      "identity" : "swiftuikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/danielsaidi/SwiftUIKit",
+      "state" : {
+        "revision" : "715b480a77ce89e6c21efff334bd981ea038ad2b",
+        "version" : "2.9.1"
+      }
     }
   ],
   "version" : 2

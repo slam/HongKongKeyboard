@@ -2,8 +2,8 @@ import GoogleInputTools
 import KeyboardKit
 import UIKit
 
-// - update main app look and feel, add check for full access
 // - add branding to the empty autocomplete area
+// - remove symbol input set for zh
 
 class KeyboardViewController: KeyboardInputViewController {
     override func viewDidLoad() {
