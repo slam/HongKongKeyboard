@@ -4,15 +4,27 @@ import SwiftUIKit
 
 struct HomeScreen: View {
     @StateObject private var keyboardState = KeyboardEnabledState(bundleId: "com.sahnlam.HongKongKeyboardApp.keyboard")
+    @State private var text = ""
 
     var body: some View {
         NavigationView {
             List {
+                Section {
+                    TextField(
+                        "不妨試試",
+                        text: $text
+                    )
+                    EnabledListItem(
+                        isEnabled: isKeyboardActive,
+                        enabledText: "粵語拼音 is selected",
+                        disabledText: "粵語拼音 is not selected"
+                    )
+                }
                 Section(header: Text("Keyboard"), footer: footerText) {
                     EnabledListItem(
                         isEnabled: isKeyboardEnabled,
-                        enabledText: "Keyboard is enabled",
-                        disabledText: "Keyboard is disabled"
+                        enabledText: "粵語拼音 is enabled",
+                        disabledText: "粵語拼音 is disabled"
                     )
                     EnabledListItem(
                         isEnabled: isFullAccessEnabled,
@@ -20,7 +32,7 @@ struct HomeScreen: View {
                         disabledText: "Full Access is disabled"
                     )
                     ListNavigationButton(action: openSettings) {
-                        Label("System settings", image: .settings)
+                        Label("Settings", image: .settings)
                     }
                 }
             }
@@ -34,7 +46,7 @@ struct HomeScreen: View {
 
 private extension HomeScreen {
     var footerText: some View {
-        Text("Enable 粵語拼音 under system settings, then select it with 🌐 when typing.")
+        Text("To install, add 粵語拼音 as a new keyboard in Settings ➔ General ➔ Keyboards and grant Full Access.")
     }
 }
 
@@ -47,14 +59,12 @@ private extension HomeScreen {
         keyboardState.isKeyboardEnabled
     }
 
+    var isKeyboardActive: Bool {
+        keyboardState.isKeyboardCurrentlyActive
+    }
+
     func openSettings() {
         guard let url = URL.keyboardSettings else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HomeScreen()
     }
 }

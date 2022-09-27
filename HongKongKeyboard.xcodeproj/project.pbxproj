@@ -14,7 +14,7 @@
 		757E26B928E2C0AB00D43265 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757E26B828E2C0AB00D43265 /* HomeScreen.swift */; };
 		757E26BC28E2C16500D43265 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 757E26BB28E2C16500D43265 /* SwiftUIKit */; };
 		757E26BE28E2C1B300D43265 /* EnabledListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757E26BD28E2C1B300D43265 /* EnabledListItem.swift */; };
-		757E26C028E2C21500D43265 /* Image+HongKongKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757E26BF28E2C21500D43265 /* Image+HongKongKeyboard.swift */; };
+		757E26C028E2C21500D43265 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757E26BF28E2C21500D43265 /* Images.swift */; };
 		7588BB9328E0063F009467A1 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 7588BB9228E0063F009467A1 /* GoogleInputTools */; };
 		7588BB9528E0064D009467A1 /* GoogleInputTools in Frameworks */ = {isa = PBXBuildFile; productRef = 7588BB9428E0064D009467A1 /* GoogleInputTools */; };
 		7588BB9728E007E8009467A1 /* InputToolsActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7588BB9628E007E8009467A1 /* InputToolsActionHandler.swift */; };
@@ -27,11 +27,7 @@
 		84670448234A709400355331 /* HongKongKeyboardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84670447234A709400355331 /* HongKongKeyboardApp.swift */; };
 		84670460234A711100355331 /* KeyboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467045F234A711100355331 /* KeyboardViewController.swift */; };
 		84670464234A711100355331 /* HongKongKeyboard.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8467045D234A711100355331 /* HongKongKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		84670488234A718C00355331 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467046A234A718C00355331 /* Assets.swift */; };
-		84670489234A718C00355331 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046B234A718C00355331 /* Colors.xcassets */; };
 		8467048A234A718C00355331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046C234A718C00355331 /* Images.xcassets */; };
-		846704BE234A727F00355331 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8467046A234A718C00355331 /* Assets.swift */; };
-		846704BF234A727F00355331 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046B234A718C00355331 /* Colors.xcassets */; };
 		846704C0234A727F00355331 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8467046C234A718C00355331 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -85,7 +81,7 @@
 		757E26B728E17D1000D43265 /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/Localizable.strings; sourceTree = "<group>"; };
 		757E26B828E2C0AB00D43265 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		757E26BD28E2C1B300D43265 /* EnabledListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledListItem.swift; sourceTree = "<group>"; };
-		757E26BF28E2C21500D43265 /* Image+HongKongKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+HongKongKeyboard.swift"; sourceTree = "<group>"; };
+		757E26BF28E2C21500D43265 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		7588BB9628E007E8009467A1 /* InputToolsActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputToolsActionHandler.swift; sourceTree = "<group>"; };
 		7588BB9828E00809009467A1 /* KeyboardAutocompleteToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardAutocompleteToolbar.swift; sourceTree = "<group>"; };
 		7588BB9A28E00833009467A1 /* KeyboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardView.swift; sourceTree = "<group>"; };
@@ -101,8 +97,6 @@
 		8467045D234A711100355331 /* HongKongKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HongKongKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8467045F234A711100355331 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
 		84670461234A711100355331 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8467046A234A718C00355331 /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
-		8467046B234A718C00355331 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8467046C234A718C00355331 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		OBJ_246 /* swiftgen.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -173,10 +167,8 @@
 		84670469234A718C00355331 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8467046A234A718C00355331 /* Assets.swift */,
-				8467046B234A718C00355331 /* Colors.xcassets */,
 				8467046C234A718C00355331 /* Images.xcassets */,
-				757E26BF28E2C21500D43265 /* Image+HongKongKeyboard.swift */,
+				757E26BF28E2C21500D43265 /* Images.swift */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -327,7 +319,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84670489234A718C00355331 /* Colors.xcassets in Resources */,
 				8467048A234A718C00355331 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,7 +329,6 @@
 			files = (
 				846704C0234A727F00355331 /* Images.xcassets in Resources */,
 				757E26B328E178BC00D43265 /* Localizable.strings in Resources */,
-				846704BF234A727F00355331 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,8 +364,7 @@
 				757E26BE28E2C1B300D43265 /* EnabledListItem.swift in Sources */,
 				84670448234A709400355331 /* HongKongKeyboardApp.swift in Sources */,
 				757E26B928E2C0AB00D43265 /* HomeScreen.swift in Sources */,
-				84670488234A718C00355331 /* Assets.swift in Sources */,
-				757E26C028E2C21500D43265 /* Image+HongKongKeyboard.swift in Sources */,
+				757E26C028E2C21500D43265 /* Images.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +375,6 @@
 				757E26B028E10AFB00D43265 /* InputToolsLayoutProvider.swift in Sources */,
 				7588BB9928E00809009467A1 /* KeyboardAutocompleteToolbar.swift in Sources */,
 				7588BB9B28E00833009467A1 /* KeyboardView.swift in Sources */,
-				846704BE234A727F00355331 /* Assets.swift in Sources */,
 				75C48D7025B589D400BF528A /* InputToolsInputSetProvider.swift in Sources */,
 				7588BB9728E007E8009467A1 /* InputToolsActionHandler.swift in Sources */,
 				75C48D6625B416D500BF528A /* InputToolsAppearance.swift in Sources */,
