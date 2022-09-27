@@ -2,9 +2,8 @@ import GoogleInputTools
 import KeyboardKit
 import UIKit
 
-// - new punctation layout only for zh locale
 // - update main app look and feel, add check for full access
-// - add haptic and audio feedback?
+// - add branding to the empty autocomplete area
 
 class KeyboardViewController: KeyboardInputViewController {
     override func viewDidLoad() {
@@ -16,7 +15,9 @@ class KeyboardViewController: KeyboardInputViewController {
         autocompleteProvider = KeyboardAutocompleteProvider(context: keyboardContext,
                                                             inputToolsContext: inputToolsContext)
 
-        inputSetProvider = InputToolsInputSetProvider()
+        inputSetProvider = StandardInputSetProvider(context: keyboardContext,
+                                                    providers: [InputToolsInputSetProvider(),
+                                                                EnglishInputSetProvider()])
 
         keyboardAppearance = InputToolsAppearance(context: keyboardContext)
 

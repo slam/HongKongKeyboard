@@ -1,7 +1,9 @@
 import KeyboardKit
 
-class InputToolsInputSetProvider: InputSetProvider {
+class InputToolsInputSetProvider: LocalizedInputSetProvider {
     let baseProvider = EnglishInputSetProvider()
+
+    public let localeKey: String = "zh"
 
     var alphabeticInputSet: AlphabeticInputSet {
         baseProvider.alphabeticInputSet

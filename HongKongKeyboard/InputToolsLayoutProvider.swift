@@ -1,10 +1,13 @@
 import KeyboardKit
+import UIKit
 
 class InputToolsLayoutProvider: StandardKeyboardLayoutProvider {
     override func keyboardLayout(for context: KeyboardContext) -> KeyboardLayout {
         let layout = super.keyboardLayout(for: context)
-        var rows = layout.itemRows
 
+        guard context.locale == Locale(identifier: "zh") else { return layout }
+
+        var rows = layout.itemRows
         let rowIndex = rows.count - 1
         guard let system = (rows[rowIndex].first { $0.action.isSystemAction }) else { return layout }
 
